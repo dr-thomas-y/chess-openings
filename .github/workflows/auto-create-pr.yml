@@ -14,22 +14,20 @@ jobs:
     steps:
       - name: Create PR if no open PR exists
         run: |
-          OPEN=$(gh pr list \
-            --repo ${{ github.repository }} \
-            --head ${{ github.ref_name }} \
-            --base main \
-            --state open \
-            --json number \
+          OPEN=$(gh api \
+            "repos/${{ github.repository }}/pulls?head=${{ github.repository_owner }}:${{ github.ref_name }}&base=main&state=open" \
             --jq length)
+          echo "Open PRs: $OPEN"
           if [ "$OPEN" = "0" ]; then
-            gh pr create \
-              --repo ${{ github.repository }} \
-              --head ${{ github.ref_name }} \
-              --base main \
-              --title "Auto: ${{ github.ref_name }}" \
-              --body "Auto-created PR for branch ${{ github.ref_name }}"
+            gh api repos/${{ github.repository }}/pulls \
+              -X POST \
+              -f title="Auto: ${{ github.ref_name }}" \
+              -f body="Auto-created PR" \
+              -f head="${{ github.ref_name }}" \
+              -f base="main"
+            echo "PR created"
           else
-            echo "Open PR already exists, skipping creation"
+            echo "Open PR already exists, skipping"
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
