@@ -598,7 +598,7 @@ header {
             <div class="branch-hd">
               <div class="branch-icon" style="background:#3a1a10">♝</div>
               <div class="branch-lbl"><div class="branch-name">古典主線</div><div class="branch-nota">6.Bg5 — 釘住 Nf6</div></div>
-              <div class="branch-summ">Fischer 最愛，最複雜主線</div>
+              <div class="branch-summ">最複雜主線，Kasparov、Spassky 執白常用</div>
               <span class="chevron">▶</span>
             </div>
             <div class="branch-body"><div class="detail-grid">
@@ -630,7 +630,7 @@ header {
               <span class="chevron">▶</span>
             </div>
             <div class="branch-body"><div class="detail-grid">
-              <div class="dc"><h4>▸ 白棋計畫</h4><p>Bc4 <strong>直接瞄準 f7</strong>，搭配 Nb3 → Nd5 跳馬計畫，Fischer 職業早期招牌。</p></div>
+              <div class="dc"><h4>▸ 白棋計畫</h4><p>Bc4 <strong>直接瞄準 f7</strong>，搭配 Nb3 → Nd5 跳馬計畫，Fischer 執白最著名的招牌武器，以其命名。</p></div>
               <div class="dc"><h4>▸ 黑棋對應</h4><p><strong>6...e6</strong> 封閉主教斜線，接著 Be7 + 0-0 安全易位，也可以 6...e5 趕走 Nd4。</p></div>
               <div class="dc"><h4>✓ 可以保留</h4><p>a6 阻止 Bb5+ 效果<strong>更重要</strong>，后翼反攻大方向保留，b5 和 Qc7 仍是長期目標。</p></div>
               <div class="dc"><h4>✗ 必須調整</h4><p>不宜急於易位，<strong>f7 有戰術威脅</strong>，e6 的時機要比其他分支更早走。</p></div>
@@ -725,8 +725,22 @@ header {
     </div>
     <div class="tab-pane" id="pane-ck-branches">
       <div class="pane-inner">
-        <div class="pane-intro">以下列出卡羅康的四種主要變化方向。前兩項（4...Nd7、4...Nf6）是走到 <span class="mono">1.e4 c6 2.d4 d5 3.Nc3 dxe4 4.Nxe4</span> 後<strong style="color:#7ac4e8">黑棋的第4步選擇</strong>；後兩項（前進變例、兩馬變例）則是<strong style="color:#7ac4e8">白棋在第3步或第2步就走不同方向</strong>的獨立分支，不經過 4.Nxe4：</div>
+        <div class="pane-intro">以下列出卡羅康的五種主要變化方向。前三項（4...Bf5、4...Nd7、4...Nf6）是走到 <span class="mono">1.e4 c6 2.d4 d5 3.Nc3 dxe4 4.Nxe4</span> 後<strong style="color:#7ac4e8">黑棋的第4步選擇</strong>；後兩項（前進變例、兩馬變例）則是<strong style="color:#7ac4e8">白棋在第3步或第2步就走不同方向</strong>的獨立分支，不經過 4.Nxe4：</div>
         <div class="branch-list">
+          <div class="branch-row" data-branch="ck-bf5" onclick="toggleBranch(this)">
+            <div class="branch-hd">
+              <div class="branch-icon" style="background:#0a2030">♝</div>
+              <div class="branch-lbl"><div class="branch-name">古典主線</div><div class="branch-nota">4...Bf5 ⭐ — 最核心的主線</div></div>
+              <div class="branch-summ">搶先出動主教，卡羅康的靈魂</div>
+              <span class="chevron">▶</span>
+            </div>
+            <div class="branch-body"><div class="detail-grid">
+              <div class="dc"><h4>▸ 白棋計畫</h4><p>5.Ng3 趕走主教，接著 Nf3 + h4 + h5 配合攻擊黑棋的 Bg6。白棋用邊兵衝擊，再以 Bd3 Bxd3 Qxd3 建立中央壓力。</p></div>
+              <div class="dc"><h4>▸ 黑棋對應</h4><p><strong>4...Bf5</strong> 是卡羅康最核心的選擇！主教在 e6 關門前搶先出動，接著 e6 + Nd7 + Ngf6 + Be7 + 0-0，建立健全陣型。</p></div>
+              <div class="dc"><h4>✓ 可以保留</h4><p>c6 + d5 骨架完整保留。主教提早出動是卡羅康對比法式防禦的<strong>最大優點</strong>，4...Bf5 正是這個精神的直接體現。</p></div>
+              <div class="dc"><h4>✗ 必須調整</h4><p>白棋 h4-h5 推進快，Bg6 需注意。5.Ng3 之後若 h5 跟進，需及時決定主教走 <strong>Bh7</strong> 穩健退守，或 <strong>Be4</strong> 換馬製造不對稱。</p></div>
+            </div></div>
+          </div>
           <div class="branch-row" data-branch="ck-nd7" onclick="toggleBranch(this)">
             <div class="branch-hd">
               <div class="branch-icon" style="background:#0e2030">♞</div>
@@ -745,13 +759,13 @@ header {
             <div class="branch-hd">
               <div class="branch-icon" style="background:#1a2a10">♞</div>
               <div class="branch-lbl"><div class="branch-name">現代變例</div><div class="branch-nota">4...Nf6 — 積極對攻</div></div>
-              <div class="branch-summ">邀請白棋換馬，換取雙主教優勢</div>
+              <div class="branch-summ">邀請白棋換馬，以破壞兵形換取 g 列活力</div>
               <span class="chevron">▶</span>
             </div>
             <div class="branch-body"><div class="detail-grid">
               <div class="dc"><h4>▸ 白棋計畫</h4><p>5.Nxf6+ gxf6（或 exf6），攻擊黑棋被破壞的兵形。白棋的目標是利用 f 列半開放線和黑棋的雙倍兵弱點。</p></div>
-              <div class="dc"><h4>▸ 黑棋對應</h4><p><strong>4...Nf6</strong>，如果 5.Nxf6+ 接受換馬，黑棋走 gxf6 雖然兵形破壞，但換來了<strong>兩個主教和半開放 g 列</strong>，可以積極反攻。</p></div>
-              <div class="dc"><h4>✓ 可以保留</h4><p>c6 + d5 的中央骨架思路保留，黑棋的整體目標仍是穩固後發展雙主教優勢。</p></div>
+              <div class="dc"><h4>▸ 黑棋對應</h4><p><strong>4...Nf6</strong>，如果 5.Nxf6+ 接受換馬，黑棋走 gxf6 雖然兵形破壞，但換來了<strong>半開放 g 列</strong>，以積極的主教活力展開反攻。（注意：換馬不影響主教，雙方均保有雙象。）</p></div>
+              <div class="dc"><h4>✓ 可以保留</h4><p>c6 + d5 的中央骨架思路保留，黑棋的整體目標是以開放的 g 列和積極的主教換取反攻活力。</p></div>
               <div class="dc"><h4>✗ 必須調整</h4><p>接受 Nxf6+ 後兵形變化較大，需要接受 g 列雙倍兵，換取主動反攻機會，心態上是「損形換活力」。</p></div>
             </div></div>
           </div>
@@ -798,7 +812,7 @@ header {
         <div class="cmp-wrap"><table class="cmp-table">
           <thead><tr><th>白棋變例</th><th>黑棋核心應對</th><th>關鍵優先步</th><th>核心原則</th></tr></thead>
           <tbody>
-            <tr><td>主線 <span class="mono">3.Nc3</span></td><td>3...dxe4 4...Nd7 或 Nf6</td><td>Bf5 或 Bg4</td><td>穩健發展，保留雙主教</td></tr>
+            <tr><td>主線 <span class="mono">3.Nc3</span></td><td>3...dxe4 4...Bf5（古典）、Nd7 或 Nf6</td><td><strong>4...Bf5 最核心</strong></td><td>主教提早出動，健全兵形</td></tr>
             <tr><td>前進 <span class="mono">3.e5</span></td><td>立即 <strong>3...Bf5</strong></td><td>Bf5 絕對優先</td><td>主教出來前 e6 不能走</td></tr>
             <tr><td>交換 <span class="mono">3.exd5</span></td><td>3...cxd5 對稱</td><td>Nf6 + Bf5</td><td>接受對稱，謀求殘局</td></tr>
             <tr><td>兩馬 <span class="mono">2.Nc3</span></td><td>2...d5，靈活應對</td><td>視情況 Bg4 或換子</td><td>保持 d5 控制，核心不變</td></tr>
@@ -868,9 +882,9 @@ header {
             </div>
             <div class="branch-body"><div class="detail-grid">
               <div class="dc"><h4>▸ 白棋計畫</h4><p>4.e3 準備 Bxc4 吃回兵，接著 Nc3 + 0-0，建立 d4+e3 的穩健中央。Bc4 對準 f7，威脅性強。</p></div>
-              <div class="dc"><h4>▸ 黑棋對應</h4><p>黑棋通常走 <strong>a6 + b5</strong> 保住 c4 的兵，或者 <strong>e6 + c5</strong> 反擊白棋的 d4，製造不對稱局面。</p></div>
+              <div class="dc"><h4>▸ 黑棋對應</h4><p>黑棋可以走 <strong>e6 + c5</strong> 反擊白棋的 d4，或嘗試 a6 + b5 保兵，但後者並不安全——白棋理論應對是立刻 <strong>a4!</strong> 破壞兵鏈。</p></div>
               <div class="dc"><h4>✓ 白棋優勢</h4><p>發展迅速，Bc4 + Nc3 + 0-0 的配置非常自然流暢，對 f7 的壓力是長期威脅。</p></div>
-              <div class="dc"><h4>✗ 注意事項</h4><p>如果黑棋走 a6 + b5 保住兵，白棋不要急著強行奪回，而是繼續發展加速節奏壓制。</p></div>
+              <div class="dc"><h4>✗ 注意事項</h4><p>若黑棋試圖以 b5 保兵，白棋<strong>必須立刻走 a4!</strong> 打擊兵鏈（a4 c6 axb5 cxb5 後白棋大優），切勿放過這個懲罰機會。</p></div>
             </div></div>
           </div>
           <div class="branch-row" data-branch="qg-e4" onclick="toggleBranch(this)">
@@ -911,7 +925,7 @@ header {
             <div class="branch-body"><div class="detail-grid">
               <div class="dc"><h4>▸ 白棋計畫</h4><p>黑棋走 c6 支撐 d5，不讓 c8 主教被封住。白棋接著 3.Nf3 Nf6 4.Nc3 dxc4，進入斯拉夫主線，繼續爭奪 c4 的兵。</p></div>
               <div class="dc"><h4>▸ 黑棋對應</h4><p>斯拉夫的優點是保留了 c8 主教的活動空間（不像 e6 會把主教封死）。黑棋接著 Bf5 或 Bg4 主動出動主教。</p></div>
-              <div class="dc"><h4>✓ 白棋計畫</h4><p>白棋的目標是 Bg5 釘住 Nf6，或 e4 強行打開中央。Meran 變例（e3+b4）是最精彩的進攻路線。</p></div>
+              <div class="dc"><h4>✓ 白棋計畫</h4><p>白棋的目標是 Bg5 釘住 Nf6，或 e4 強行打開中央。（注意：Meran 變例屬於<strong>半斯拉夫防禦</strong>，黑棋同時走 c6 和 e6，是平行體系，非純斯拉夫的範疇。）</p></div>
               <div class="dc"><h4>✗ 注意事項</h4><p>斯拉夫的理論很深，黑棋防禦工具完整。白棋需要比 QGD 更精準的計算才能獲得優勢。</p></div>
             </div></div>
           </div>
@@ -1521,6 +1535,16 @@ const BRANCH_POS = {
 
   // ── CARO-KANN branches ──
   // Classical: 4...Bf5 (main line). Show position after 4.Nxe4 Bf5
+  'ck-bf5': {
+    get pos(){
+      let p=ckBase();
+      p=mv(p,0,2,3,5); // Bf5: c8(row0,col2)→f5(row3,col5)
+      return p;
+    },
+    hl:{'4,4':'hl-y','3,5':'hl-g'},
+    arrows:[[3,5,4,4,'#4a9fd4cc'],[3,5,2,4,'#4a9fd4cc']],
+    nota:'<span class="w">4.Nxe4</span> <span class="cur">Bf5 ⭐</span> — 古典主線，卡羅康的靈魂'
+  },
   'ck-nd7': {
     get pos(){
       let p=ckBase();
@@ -1598,7 +1622,7 @@ const BRANCH_POS = {
     },
     hl:{'3,5':'hl-r','4,5':'hl-y'},
     arrows:[[3,5,5,3,'#c0392bcc'],[4,5,3,4,'#3da65acc']],
-    nota:'<span class="b">...Bf5</span> 搶斜線 — 正確應對：<span class="cur">Bg3，讓他先換</span>'
+    nota:'<span class="b">...Bf5</span> 搶斜線 — 正確應對：<span class="cur">c4 或 Qb3，打擊 b7</span>'
   },
   // ld-c4push: opponent pushes ...c4 attacking Bd3
   'ld-c4push': {
