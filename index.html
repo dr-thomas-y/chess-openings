@@ -603,9 +603,9 @@ header {
             </div>
             <div class="branch-body"><div class="detail-grid">
               <div class="dc"><h4>▸ 白棋計畫</h4><p>Bg5 <strong>釘住黑棋 Nf6</strong>，接著 Qd2 + 0-0-0 后翼易位，從 d 列和 h 列猛攻黑棋國王。</p></div>
-              <div class="dc"><h4>▸ 黑棋對應</h4><p><strong>6...e6</strong> 穩固 d5，準備出子（不是「接受」釘制，而是正常發展）。接著白棋若走 7.f4，黑棋可選 <strong>7...h6</strong> 趕走主教（舊主線），或選擇激進的 <strong>7...Qb6 毒兵變例</strong>，吃掉 b2 兵換取混戰主動權。</p></div>
+              <div class="dc"><h4>▸ 黑棋對應</h4><p><strong>6...e6</strong> 穩固 d5，準備出子（不是「接受」釘制，而是正常發展）。接著白棋若走 7.f4，黑棋主線是 <strong>7...Be7</strong> 穩固發展（主教就位準備易位），或激進的 <strong>7...Qb6 毒兵變例</strong>，吃掉 b2 兵換取混戰主動權。（注意：7...h6 後白棋退 Bh4 繼續釘住，並不能真正趕走主教。）</p></div>
               <div class="dc"><h4>✓ 可以保留</h4><p>a6 效果<strong>完全保留</strong>，b5 反攻、Nbd7 + Qc7 配置方向全部不變。</p></div>
-              <div class="dc"><h4>✗ 必須調整</h4><p><strong>Nf6 被釘住</strong>不能輕易移動。7.f4 之後需選擇方向：穩健走 h6 趕象（舊主線），或激進走 Qb6 毒兵，易位時機視路線而定。</p></div>
+              <div class="dc"><h4>✗ 必須調整</h4><p><strong>Nf6 被釘住</strong>不能輕易移動。7.f4 之後需選擇方向：穩健走 <strong>Be7</strong> 主教就位（主線），或激進走 Qb6 毒兵，易位時機視路線而定。</p></div>
             </div></div>
           </div>
           <div class="branch-row" data-branch="nj-Be3" onclick="toggleBranch(this)">
@@ -666,7 +666,7 @@ header {
         <div class="cmp-wrap"><table class="cmp-table">
           <thead><tr><th>白棋第6步</th><th>可保留 ✓</th><th>需調整 ✗</th><th>核心問題</th></tr></thead>
           <tbody>
-            <tr><td><span class="mono">6.Bg5</span></td><td><span class="chk">✓</span> a6、b5<br><span class="chk">✓</span> e6 方向</td><td><span class="crs">✗</span> Nf6 被釘<br><span class="crs">✗</span> e6 vs h6</td><td>接受釘制還是趕象？</td></tr>
+            <tr><td><span class="mono">6.Bg5</span></td><td><span class="chk">✓</span> a6、b5<br><span class="chk">✓</span> e6 方向</td><td><span class="crs">✗</span> Nf6 被釘<br><span class="crs">✗</span> Be7 vs Qb6</td><td>穩健 Be7 還是激進毒兵？</td></tr>
             <tr><td><span class="mono">6.Be3</span></td><td><span class="chk">✓</span> 整套后翼<br><span class="chk">✓</span> e6+Nbd7</td><td><span class="crs">✗</span> g4-g5 快<br><span class="crs">✗</span> 易位時機</td><td>b5 要比 g5 更早嗎？</td></tr>
             <tr><td><span class="mono">6.Bc4</span></td><td><span class="chk">✓</span> a6 封 b5<br><span class="chk">✓</span> 后翼方向</td><td><span class="crs">✗</span> f7 有威脅<br><span class="crs">✗</span> 不宜急於易位</td><td>發展中如何防 f7？</td></tr>
             <tr><td><span class="mono">6.f4</span></td><td><span class="chk">✓</span> b5+d5<br><span class="chk">✓</span> Nbd7</td><td><span class="crs">✗</span> 節奏加快<br><span class="crs">✗</span> e5 威脅真實</td><td>d5 要比 e5 更早嗎？</td></tr>
@@ -814,7 +814,7 @@ header {
           <tbody>
             <tr><td>主線 <span class="mono">3.Nc3</span></td><td>3...dxe4 4...Bf5（古典）、Nd7 或 Nf6</td><td><strong>4...Bf5 最核心</strong></td><td>主教提早出動，健全兵形</td></tr>
             <tr><td>前進 <span class="mono">3.e5</span></td><td>立即 <strong>3...Bf5</strong></td><td>Bf5 絕對優先</td><td>主教出來前 e6 不能走</td></tr>
-            <tr><td>交換 <span class="mono">3.exd5</span></td><td>3...cxd5 對稱</td><td>Nf6 + Bf5</td><td>接受對稱，謀求殘局</td></tr>
+
             <tr><td>兩馬 <span class="mono">2.Nc3</span></td><td>2...d5，靈活應對</td><td>視情況 Bg4 或換子</td><td>保持 d5 控制，核心不變</td></tr>
           </tbody>
         </table></div>
@@ -871,7 +871,7 @@ header {
     </div>
     <div class="tab-pane" id="pane-qg-branches">
       <div class="pane-inner">
-        <div class="pane-intro">前兩項是黑棋走 <span class="mono">2...dxc4</span> <strong style="color:#c17ef0">接受棄兵（QGA）</strong>後，走到 <span class="mono">3.Nf3 Nf6</span>，白棋第4步的兩種中央計畫。後兩項（拒絕、斯拉夫）是黑棋在<strong style="color:#c17ef0">第2步就拒絕吃兵</strong>的獨立開局，屬於平行分支，不在 QGA 的棋譜樹之內：</div>
+        <div class="pane-intro">第一項是黑棋走 <span class="mono">2...dxc4</span> <strong style="color:#c17ef0">接受棄兵（QGA）</strong>後，走到 <span class="mono">3.Nf3 Nf6</span>，白棋第4步穩健吃回的古典路線；第二項是白棋不走 Nf3，直接在第3步推 <span class="mono">3.e4</span> 的中央強攻路線（黑棋尚未走 Nf6，e4 格安全）。後兩項（拒絕、斯拉夫）是黑棋在<strong style="color:#c17ef0">第2步就拒絕吃兵</strong>的獨立開局，屬於平行分支，不在 QGA 的棋譜樹之內：</div>
         <div class="branch-list">
           <div class="branch-row" data-branch="qg-classic" onclick="toggleBranch(this)">
             <div class="branch-hd">
@@ -890,13 +890,13 @@ header {
           <div class="branch-row" data-branch="qg-e4" onclick="toggleBranch(this)">
             <div class="branch-hd">
               <div class="branch-icon" style="background:#1a1040">♘</div>
-              <div class="branch-lbl"><div class="branch-name">中央強攻路線</div><div class="branch-nota">4.e4 — 中央雙兵</div></div>
+              <div class="branch-lbl"><div class="branch-name">中央強攻路線</div><div class="branch-nota">3.e4 — 中央雙兵（不先走 Nf3）</div></div>
               <div class="branch-summ">Kasparov 最愛，最激進</div>
               <span class="chevron">▶</span>
             </div>
             <div class="branch-body"><div class="detail-grid">
-              <div class="dc"><h4>▸ 白棋計畫</h4><p>4.e4 直接建立 d4+e4 的中央雙兵，形成超強的中央控制。接著 Bxc4、Nc3 + 0-0，王翼進攻。Kasparov 在多場大賽中用此路線制勝。</p></div>
-              <div class="dc"><h4>▸ 黑棋對應</h4><p>黑棋可以走 <strong>3...e5</strong> 立即反擊中央，或 <strong>3...Nf6</strong> 先發展再等時機。如果讓白棋維持雙兵，黑棋會非常被動。</p></div>
+              <div class="dc"><h4>▸ 白棋計畫</h4><p><strong>1.d4 d5 2.c4 dxc4 3.e4</strong>——白棋跳過 Nf3，直接在第3步推 e4。此時黑棋還未走 Nf6，e4 格無人攻擊，雙兵中央成立。接著 Bxc4、Nc3 + 0-0，王翼進攻。Kasparov 在多場大賽用此路線制勝。</p></div>
+              <div class="dc"><h4>▸ 黑棋對應</h4><p>黑棋可走 <strong>3...e5</strong> 立即反擊中央，或 <strong>3...Nf6</strong> 先發展再伺機。⚠️ 注意：若改走 3.Nf3 Nf6 後才推 4.e4??，黑棋 4...Nxe4 可免費吃兵——必須先走 3.e4 再接 Nf3。</p></div>
               <div class="dc"><h4>✓ 白棋優勢</h4><p>中央控制極強，王翼攻勢後勁十足。d4+e4 的雙兵是白棋的理想型態，空間優勢顯著。</p></div>
               <div class="dc"><h4>✗ 注意事項</h4><p>雙兵中央需要穩定支撐，如果黑棋成功用 e5 或 c5 打破中央，白棋的兵形可能變成弱點。</p></div>
             </div></div>
@@ -944,10 +944,10 @@ header {
         <div class="cmp-wrap"><table class="cmp-table">
           <thead><tr><th>黑棋選擇</th><th>白棋目標</th><th>關鍵武器</th><th>核心問題</th></tr></thead>
           <tbody>
-            <tr><td>2...dxc4（接受）</td><td>快速吃回，建立雙兵中央</td><td>Bxc4 + e4</td><td>節奏還是中央誰更重要？</td></tr>
+            <tr><td>2...dxc4（接受）</td><td>快速吃回（古典 4.e3），或直接 3.e4 強攻</td><td>Bxc4 / 3.e4</td><td>穩健還是中央強攻？</td></tr>
             <tr><td>2...e6（拒絕 QGD）</td><td>Bg5 釘住，加壓中央</td><td>Bg5 + Qc2</td><td>如何突破黑棋的防禦？</td></tr>
             <tr><td>2...c6（斯拉夫）</td><td>爭奪 c4，主教斜線競賽</td><td>e3 + Bd3</td><td>如何在兩翼同時施壓？</td></tr>
-            <tr><td>2...Nf6（印度系）</td><td>中央擴張，空間優勢</td><td>Nc3 + e4</td><td>d4+e4 雙兵能否維持？</td></tr>
+            <tr><td>2...Nf6（馬紹爾防禦）</td><td>3.cxd5 Nxd5 4.e4 佔中央大優</td><td>3.cxd5 + e4</td><td>黑棋困難，白棋中央優勢顯著</td></tr>
           </tbody>
         </table></div>
       </div></div>
@@ -1652,12 +1652,20 @@ const BRANCH_POS = {
     arrows:[[4,2,1,5,'#9b59b6cc'],[4,2,3,3,'#9b59b6aa']],
     nota:'<span class="w">3.Nf3 Nf6 4.e3</span> <span class="cur">Bxc4</span> — 古典路線，主教吃回'
   },
-  // e4 central push
+  // e4 central push — White plays 3.e4 directly (before Nf3, so e4 is safe)
   'qg-e4': {
-    get pos(){ let p=qgBase(); p=mv(p,6,4,4,4); return p; },
-    hl:{'4,4':'hl-r','4,3':'hl-y','4,2':'hl-b'},
+    get pos(){
+      let p=iP();
+      p=mv(p,6,3,4,3); // 1.d4
+      p=mv(p,1,3,3,3); // 1...d5
+      p=mv(p,6,2,4,2); // 2.c4
+      p[4][2]=null; p[3][3]=null; p[4][2]='bP'; // 2...dxc4
+      p=mv(p,6,4,4,4); // 3.e4
+      return p;
+    },
+    hl:{'4,4':'hl-y','4,3':'hl-y','4,2':'hl-b'},
     arrows:[[4,4,3,3,'#9b59b6cc'],[4,4,3,5,'#9b59b6cc']],
-    nota:'<span class="w">3.Nf3 Nf6</span> <span class="cur">4.e4</span> — 中央雙兵強攻'
+    nota:'<span class="w">1.d4 d5 2.c4 dxc4</span> <span class="cur">3.e4</span> — 中央雙兵強攻（先走 e4！）'
   },
   // QGD: Black plays e6 instead of dxc4
   'qg-qgd': {
