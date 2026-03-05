@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>開局技能手冊</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════
+   ROOT VARIABLES
+══════════════════════════════════════ */
+:root {
+  --bg:      #0a0c0f;
+  --surf:    #111418;
+  --surf2:   #181d23;
+  --border:  #252c36;
+  --gold:    #d4a843;
+  --gold2:   #f0c96a;
+  --red:     #c0392b;
+  --green:   #27ae60;
+  --blue:    #2980b9;
+  --text:    #c8d0da;
+  --dim:     #6b7885;
+  --light-sq:#f0ead8;
+  --dark-sq: #4a7fb5;
+  --hl-y: rgba(255,220,30,0.85);
+  --hl-g: rgba(40,200,90,0.75);
+  --hl-r: rgba(220,60,60,0.70);
+  --hl-b: rgba(60,160,240,0.65);
+  --sq: 46px;
+
+  /* per-opening accent colours (overridden by JS) */
+  --acc: var(--gold);
+  --acc2: var(--gold2);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Crimson Pro', serif;
+  font-size: 15px;
+  min-height: 100vh;
+}
+
+/* ══════════════════════════════════════
+   TOP NAV — opening selector
+══════════════════════════════════════ */
+.top-nav {
+  background: #060809;
+  border-bottom: 2px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+.app-brand {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  color: var(--dim);
+  white-space: nowrap;
+  margin-right: 0.4rem;
+}
+.app-brand span { color: var(--gold); }
+
+.opener-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  background: var(--surf2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.18s;
+  font-family: 'Crimson Pro', serif;
+}
+.opener-btn .ob-icon { font-size: 0.85rem; }
+.opener-btn .ob-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.opener-btn .ob-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.05em;
+  color: var(--dim);
+  transition: color 0.15s;
+  white-space: nowrap;
+}
+/* sub-label hidden on mobile to save space */
+.opener-btn .ob-sub {
+  font-size: 0.62rem;
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+.opener-btn:hover { background: #1e252e; border-color: #3a4a5a; }
+.opener-btn:hover .ob-title { color: var(--text); }
+
+.opener-btn.active-nj  { border-color: #d4a843; background: #1c1508; }
+.opener-btn.active-nj  .ob-title { color: #d4a843; }
+.opener-btn.active-ck  { border-color: #4a9fd4; background: #081520; }
+.opener-btn.active-ck  .ob-title { color: #4a9fd4; }
+.opener-btn.active-qg  { border-color: #9b59b6; background: #140e1a; }
+.opener-btn.active-qg  .ob-title { color: #c17ef0; }
+.opener-btn.active-ld  { border-color: #3da65a; background: #0a1c0e; }
+.opener-btn.active-ld  .ob-title { color: #3da65a; }
+
+/* ══════════════════════════════════════
+   HEADER — per opening
+══════════════════════════════════════ */
+header {
+  background: linear-gradient(90deg,#0a0c0f 0%,#161c24 50%,#0a0c0f 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  position: sticky;
+  top: 44px;
+  z-index: 100;
+}
+.h-title h1 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(0.72rem, 2.2vw, 0.92rem);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.h-title h1 .acc  { color: var(--acc); }
+.h-sub {
+  font-size: clamp(0.55rem, 1.5vw, 0.65rem);
+  color: var(--dim);
+  letter-spacing: 0.1em;
+  font-family: 'Cinzel', serif;
+}
+.tab-bar { display: flex; gap: 0.28rem; flex-wrap: wrap; }
+.tab {
+  padding: 0.28rem 0.62rem;
+  background: var(--surf2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--dim);
+  font-family: 'Cinzel', serif;
+  font-size: clamp(0.5rem, 1.6vw, 0.6rem);
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.tab:hover { background: #222930; color: var(--text); }
+.tab.active { background: var(--acc); color: #000; font-weight: 700; border-color: var(--acc); }
+
+/* ══════════════════════════════════════
+   OPENING VIEWS
+══════════════════════════════════════ */
+.opening-view { display: none; }
+.opening-view.active { display: block; }
+
+/* Tab panes: hidden globally, shown when active */
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+/* ══════════════════════════════════════
+   DESKTOP SHELL  ≥ 700px
+══════════════════════════════════════ */
+@media (min-width: 700px) {
+  body { height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+  .top-nav { flex-shrink: 0; }
+  header { flex-shrink: 0; }
+
+  .opening-view.active {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  /* shell = horizontal row of board + right-col */
+  .shell {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .board-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0.8rem 1rem 1rem;
+    flex-shrink: 0;
+    gap: 0.6rem;
+    background: #0d1017;
+    border-right: 1px solid var(--border);
+  }
+  .right-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-width: 0;
+  }
+  .tab-pane { display: none; flex: 1; overflow: hidden; min-height: 0; }
+  .tab-pane.active { display: flex; flex-direction: column; flex: 1; overflow: hidden; min-height: 0; }
+
+  .steps-inner {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+    min-height: 0;
+  }
+  .step-sidebar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.28rem;
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--surf);
+    flex-shrink: 0;
+    align-items: center;
+  }
+  .step-detail {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.85rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    background: #0f1318;
+  }
+  .pane-inner {
+    overflow-y: auto;
+    flex: 1;
+    padding: 0.85rem 1.1rem;
+  }
+}
+
+/* ══════════════════════════════════════
+   MOBILE  < 700px
+══════════════════════════════════════ */
+@media (max-width: 699px) {
+  /* ── Tab pane visibility on mobile ── */
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+
+  /* ── Compact top bars ── */
+  .app-brand { display: none; }
+  .opener-btn .ob-sub { display: none; }
+  .opener-btn { padding: 0.3rem 0.55rem; gap: 0.3rem; }
+  .top-nav { padding: 0.35rem 0.5rem; gap: 0.3rem; }
+  .h-sub { display: none; }
+  header { padding: 0.38rem 0.6rem; top: 36px; }
+
+  /* ── Layout ── */
+  body { overflow-y: auto; }
+  .opening-view.active { display: flex; flex-direction: column; }
+  .shell { display: flex; flex-direction: column; }
+
+  /* board-col sticks below top-nav + header */
+  .board-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem 0.4rem 0.3rem;
+    gap: 0.38rem;
+    background: #0d1017;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 76px;
+    z-index: 50;
+  }
+
+  /* steps-inner stacks vertically */
+  .steps-inner {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* step-sidebar sticks right below board-col (board-col is sticky at 76px,
+     board height ≈ sq*8 + nav + padding ≈ 320px; use JS-set --sb-top) */
+  .step-sidebar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.28rem;
+    align-items: center;
+    padding: 0.38rem 0.65rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--surf);
+    position: sticky;
+    top: var(--sb-top, 400px);
+    z-index: 49;
+  }
+
+  /* detail area scrolls naturally */
+  .step-detail {
+    padding: 0.7rem 0.9rem;
+    background: #0f1318;
+    overflow-y: visible;
+  }
+  .pane-inner { padding: 0.7rem 0.9rem; }
+  .kbd-hint { display: none; }
+  .step-btn .label-text { bottom: auto; top: calc(100% + 6px); }
+}
+
+/* ══════════════════════════════════════
+   BOARD
+══════════════════════════════════════ */
+.board-wrap { display: flex; gap: 4px; }
+.rank-labels { display: flex; flex-direction: column; }
+.rank-labels span {
+  width: 14px; height: var(--sq);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.57rem; color: var(--dim); font-family: monospace;
+}
+.board-inner { display: flex; flex-direction: column; }
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(8, var(--sq));
+  grid-template-rows:    repeat(8, var(--sq));
+  border: 2px solid var(--acc);
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 0 24px rgba(212,168,67,0.15), 0 4px 20px rgba(0,0,0,0.8);
+  position: relative;
+}
+.file-labels { display: flex; margin-top: 4px; }
+.file-labels span { width: var(--sq); text-align: center; font-size: 0.57rem; color: var(--dim); font-family: monospace; }
+
+.sq {
+  width: var(--sq); height: var(--sq);
+  display: flex; align-items: center; justify-content: center;
+  font-size: calc(var(--sq) * 0.58);
+  user-select: none; transition: background 0.12s;
+}
+.sq.light { background: var(--light-sq); }
+.sq.dark  { background: var(--dark-sq); }
+.sq.hl-y  { background: var(--hl-y) !important; }
+.sq.hl-g  { background: var(--hl-g) !important; }
+.sq.hl-r  { background: var(--hl-r) !important; }
+.sq.hl-b  { background: var(--hl-b) !important; }
+
+.wp { color:#fff; display:block; line-height:1;
+  text-shadow: 1px 1px 0 #111,-1px -1px 0 #111,1px -1px 0 #111,-1px 1px 0 #111,0 0 3px rgba(0,0,0,0.7); }
+.bp { color:#111; display:block; line-height:1;
+  text-shadow: 1px 1px 0 rgba(255,255,255,0.9),-1px -1px 0 rgba(255,255,255,0.9),1px -1px 0 rgba(255,255,255,0.9),-1px 1px 0 rgba(255,255,255,0.9),0 0 4px rgba(255,255,255,0.55); }
+.arrow-svg { position:absolute; top:0; left:0; pointer-events:none; z-index:10; }
+
+.board-nav { display:flex; gap:0.42rem; width:100%; justify-content:center; }
+.nav-btn {
+  flex:1; max-width:115px;
+  padding: 0.38rem 0.5rem;
+  background: var(--surf2); border: 1px solid var(--border); border-radius:5px;
+  color: var(--text); font-family:'Crimson Pro',serif; font-size:0.8rem;
+  cursor:pointer; transition:all 0.13s;
+}
+.nav-btn:hover:not(:disabled) { border-color: var(--acc); background:#222930; }
+.nav-btn:disabled { opacity:0.2; cursor:default; }
+.nav-btn.primary { background:#1c1508; border-color:var(--acc); color:var(--acc); }
+.nav-btn.primary:hover:not(:disabled) { background:#2a1f0a; }
+.kbd-hint { font-size:0.57rem; color:var(--dim); font-family:monospace; text-align:center; }
+
+/* ══════════════════════════════════════
+   STEPS PANE
+══════════════════════════════════════ */
+.phase-label {
+  font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:0.12em;
+  color:var(--dim); padding:0 0.2rem;
+  white-space: nowrap;
+}
+
+.step-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; height: 28px;
+  background: var(--border);
+  border: 1px solid transparent;
+  border-radius: 50%;
+  color: var(--dim);
+  font-family: 'Cinzel', serif;
+  font-size: 0.52rem;
+  cursor: pointer;
+  transition: all 0.12s;
+  flex-shrink: 0;
+  /* do NOT set width:100% — must stay as a small circle */
+}
+.step-btn .num {
+  pointer-events: none;
+}
+/* hide long label text — shown via tooltip only */
+.step-btn .label-text {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e2530;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.72rem;
+  padding: 0.22rem 0.55rem;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 999;
+  letter-spacing: 0;
+}
+.step-btn:hover .label-text { display: block; }
+.step-btn:hover { background: var(--surf2); color: var(--text); border-color: var(--border); }
+.step-btn.active { background: var(--acc); color: #000; border-color: var(--acc); font-weight: 700; }
+
+.notation-bar {
+  background:#161b22; border:1px solid #3a4455; border-radius:5px;
+  padding:0.45rem 0.8rem; margin-bottom:0.65rem;
+  font-family:monospace; font-size:0.76rem; line-height:1.6;
+  color:#9bb0c8; overflow-x:auto; white-space:nowrap; flex-shrink:0;
+}
+.notation-bar .cur { color:var(--gold2); font-weight:bold; }
+.notation-bar .w   { color:#e8dcc4; }
+.notation-bar .b   { color:#c4a882; }
+
+.info-title {
+  font-family:'Cinzel',serif; font-size:0.88rem; color:#fff;
+  margin-bottom:0.48rem; display:flex; align-items:center; gap:0.42rem;
+  flex-wrap:wrap; flex-shrink:0; text-shadow:0 1px 4px rgba(0,0,0,0.5);
+}
+.badge { font-size:0.49rem; padding:0.1rem 0.42rem; border-radius:8px; letter-spacing:0.08em; font-family:'Cinzel',serif; }
+.badge-gold  { background:var(--gold);  color:#000; }
+.badge-red   { background:var(--red);   color:#fff; }
+.badge-blue  { background:var(--blue);  color:#fff; }
+.badge-green { background:var(--green); color:#fff; }
+
+.info-body { font-size:0.86rem; line-height:1.85; color:#d8e0ea; flex:1; }
+.info-body strong { color:var(--gold2); }
+.info-body em { color:#8a9baa; font-style:italic; }
+
+/* ══════════════════════════════════════
+   BRANCHES / PRINCIPLES PANE
+══════════════════════════════════════ */
+.pane-intro {
+  font-size:0.8rem; color:var(--dim); line-height:1.7;
+  margin-bottom:0.8rem; padding-bottom:0.65rem; border-bottom:1px solid var(--border);
+}
+.pane-intro .mono { font-family:monospace; color:var(--gold); font-size:0.74rem; }
+
+.branch-list { display:flex; flex-direction:column; gap:0.38rem; }
+.branch-row {
+  background:var(--surf); border:1px solid var(--border);
+  border-radius:7px; cursor:pointer; transition:border-color 0.15s; overflow:hidden;
+}
+.branch-row:hover { border-color:#4a5a70; }
+.branch-row.open  { border-color:var(--acc); box-shadow:0 0 0 1px var(--acc); }
+.branch-hd { display:flex; align-items:center; gap:0.55rem; padding:0.55rem 0.8rem; }
+.branch-icon { width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.88rem; flex-shrink:0; }
+.branch-lbl { flex:1; min-width:0; }
+.branch-name { font-family:'Cinzel',serif; font-size:0.68rem; color:#fff; letter-spacing:0.04em; }
+.branch-nota { font-family:monospace; font-size:0.66rem; color:var(--gold); }
+.branch-summ { font-size:0.74rem; color:var(--dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.chevron { color:var(--dim); font-size:0.6rem; transition:transform 0.18s; flex-shrink:0; }
+.branch-row.open .chevron { transform:rotate(90deg); }
+.branch-body { display:none; padding:0.65rem 0.8rem 0.8rem; border-top:1px solid var(--border); background:var(--surf2); }
+.branch-row.open .branch-body { display:block; }
+.detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.65rem; }
+@media (max-width:500px) { .detail-grid { grid-template-columns:1fr; } }
+.dc h4 { font-family:'Cinzel',serif; font-size:0.53rem; letter-spacing:0.13em; color:var(--dim); margin-bottom:0.28rem; }
+.dc p  { font-size:0.78rem; line-height:1.65; color:var(--text); }
+.dc p strong { color:var(--gold2); }
+
+/* principles */
+.principles-wrap { display:flex; flex-direction:column; gap:0.8rem; }
+.p-box { border-radius:8px; padding:0.8rem 0.95rem; }
+.p-box h3 { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.17em; margin-bottom:0.6rem; }
+.p-item { display:flex; gap:0.55rem; align-items:flex-start; margin-bottom:0.5rem; }
+.p-num { width:19px; height:19px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Cinzel',serif; font-size:0.48rem; flex-shrink:0; margin-top:2px; }
+.p-txt { font-size:0.82rem; line-height:1.7; color:var(--text); }
+
+.cmp-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.cmp-table { width:100%; border-collapse:collapse; font-size:0.76rem; }
+.cmp-table th { font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:0.09em; color:var(--gold); text-align:left; padding:0.4rem 0.58rem; border-bottom:1px solid var(--border); background:var(--surf); }
+.cmp-table td { padding:0.4rem 0.58rem; border-bottom:1px solid #1a1f28; vertical-align:top; line-height:1.58; background:var(--surf); color:var(--text); }
+.cmp-table tr:last-child td { border-bottom:none; }
+.chk { color:#6abf40; } .crs { color:var(--red); }
+.mono { font-family:monospace; color:var(--gold); font-size:0.76rem; }
+
+::-webkit-scrollbar { width:4px; height:4px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     TOP NAV — opening switcher
+══════════════════════════════════════ -->
+<div class="top-nav">
+  <div class="app-brand">♟ <span>開局技能手冊</span></div>
+
+  <button class="opener-btn active-nj" onclick="switchOpening('nj')">
+    <span class="ob-icon">♟</span>
+    <span class="ob-text">
+      <span class="ob-title">西西里 · 納依道夫</span>
+      <span class="ob-sub">執黑 vs 1.e4</span>
+    </span>
+  </button>
+
+  <button class="opener-btn" onclick="switchOpening('ck')">
+    <span class="ob-icon">🛡</span>
+    <span class="ob-text">
+      <span class="ob-title">卡羅康防禦</span>
+      <span class="ob-sub">執黑 vs 1.e4</span>
+    </span>
+  </button>
+
+  <button class="opener-btn" onclick="switchOpening('qg')">
+    <span class="ob-icon">♔</span>
+    <span class="ob-text">
+      <span class="ob-title">后翼棄兵</span>
+      <span class="ob-sub">執白 vs 1.d4</span>
+    </span>
+  </button>
+
+  <button class="opener-btn" onclick="switchOpening('ld')">
+    <span class="ob-icon">♗</span>
+    <span class="ob-text">
+      <span class="ob-title">倫敦體系</span>
+      <span class="ob-sub">執白 vs 1.d4</span>
+    </span>
+  </button>
+</div>
+
+<!-- ══════════════════════════════════════
+     OPENING 1: 納依道夫 (nj)
+══════════════════════════════════════ -->
+<div class="opening-view active" id="view-nj" data-acc="#d4a843">
+
+  <header id="hdr-nj">
+    <div class="h-title">
+      <h1>西西里防禦 · <span class="acc">納依道夫變例</span></h1>
+      <div class="h-sub">Sicilian Defense — Najdorf Variation &nbsp;|&nbsp; 執黑</div>
+    </div>
+    <div class="tab-bar" id="tabs-nj">
+      <button class="tab active" onclick="switchTab('nj','steps')">📖 逐步走法</button>
+      <button class="tab" onclick="switchTab('nj','branches')">🌿 第6步分支</button>
+      <button class="tab" onclick="switchTab('nj','principles')">💡 核心原則</button>
+    </div>
+  </header>
+
+  <div class="shell">
+  <div class="board-col" id="bcol-nj">
+    <div class="board-wrap">
+      <div class="rank-labels" id="rl-nj"></div>
+      <div class="board-inner">
+        <div class="board-grid" id="board-nj"><svg class="arrow-svg" id="svg-nj"></svg></div>
+        <div class="file-labels" id="fl-nj"></div>
+      </div>
+    </div>
+    <div class="board-nav">
+      <button class="nav-btn" id="prev-nj" onclick="prevStep('nj')" disabled>← 上一步</button>
+      <button class="nav-btn primary" id="next-nj" onclick="nextStep('nj')">下一步 →</button>
+    </div>
+    <div class="kbd-hint">← → 鍵盤翻頁</div>
+  </div>
+
+  <div class="right-col">
+    <!-- STEPS -->
+    <div class="tab-pane active" id="pane-nj-steps">
+      <div class="steps-inner">
+        <div class="step-sidebar" id="sb-nj"></div>
+        <div class="step-detail">
+          <div class="notation-bar" id="nota-nj">—</div>
+          <div class="info-title" id="title-nj">—</div>
+          <div class="info-body"  id="body-nj"></div>
+        </div>
+      </div>
+    </div>
+    <!-- BRANCHES -->
+    <div class="tab-pane" id="pane-nj-branches">
+      <div class="pane-inner">
+        <div class="pane-intro">走到 <span class="mono">1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 a6</span> 後，<strong style="color:var(--gold2)">白棋第6步是關鍵分叉點</strong>。點擊任一分支展開：</div>
+        <div class="branch-list">
+          <div class="branch-row" data-branch="nj-Bg5" onclick="toggleBranch(this)">
+            <div class="branch-hd">
+              <div class="branch-icon" style="background:#3a1a10">♝</div>
+              <div class="branch-lbl"><div class="branch-name">英格利希攻擊</div><div class="branch-nota">6.Bg5 — 釘住 Nf6</div></div>
+              <div class="branch-summ">Fischer 最愛，最複雜主線</div>
+              <span class="chevron">▶</span>
+            </div>
+            <div class="branch-body"><div class="detail-grid">
+              <div class="dc"><h4>▸ 白棋計畫</h4><p>Bg5 <strong>釘住黑棋 Nf6</strong>，接著 Qd2 + 0-0-0 后翼易位，從 d 列和 h 列猛攻黑棋國王。</p></div>
+              <div class="dc"><h4>▸ 黑棋對應</h4><p><strong>6...e6</strong> 接受釘制，或 7...h6 趕象。接著 Be7 + 0-0 + b5 后翼反攻。</p></div>
+              <div class="dc"><h4>✓ 可以保留</h4><p>a6 效果<strong>完全保留</strong>，b5 反攻、Nbd7 + Qc7 配置方向全部不變。</p></div>
+              <div class="dc"><h4>✗ 必須調整</h4><p><strong>Nf6 被釘住</strong>不能輕易移動。需先決定 e6 接受壓制還是 h6 趕象，易位時機謹慎。</p></div>
+            </div></div>
+          </div>
+          <div class="branch-row" data-branch="nj-Be3" onclick="toggleBranch(this)">
+            <div class="branch-hd">
+              <div class="branch-icon" style="background:#10243a">♗</div>
+              <div class="branch-lbl"><div class="branch-name">英格利希攻擊體系</div><div class="branch-nota">6.Be3 — 現代最流行</div></div>
+              <div class="branch-summ">Anand、Carlsen 常用</div>
+              <span class="chevron">▶</span>
+            </div>
+            <div class="branch-body"><div class="detail-grid">
+              <div class="dc"><h4>▸ 白棋計畫</h4><p>Be3 穩定馬位，接著 f3 → g4 → g5 強力推進王翼，兵鏈直衝黑棋國王。</p></div>
+              <div class="dc"><h4>▸ 黑棋對應</h4><p><strong>6...e5</strong> 趕走 Nd4，或 6...e6 穩健發展。目標是 Nbd7 + b5 + Bb7 后翼賽跑。</p></div>
+              <div class="dc"><h4>✓ 可以保留</h4><p>后翼計畫<strong>完整保留</strong>：b5、Qc7、Bb7 一樣，a6 效果不變，e6 + Nbd7 配置相同。</p></div>
+              <div class="dc"><h4>✗ 必須調整</h4><p>白棋 <strong>g4-g5 推進很快</strong>，王翼易位後國王可能危險，需判斷是否改為后翼易位。</p></div>
+            </div></div>
+          </div>
+          <div class="branch-row" data-branch="nj-Bc4" onclick="toggleBranch(this)">
+            <div class="branch-hd">
+              <div class="branch-icon" style="background:#1a3a10">♗</div>
+              <div class="branch-lbl"><div class="branch-name">費雪-索辛變例</div><div class="branch-nota">6.Bc4 — 瞄準 f7</div></div>
+              <div class="branch-summ">主教直接威脅 f7 弱點</div>
+              <span class="chevron">▶</span>
+            </div>
+            <div class="branch-body"><div class="detail-grid">
+              <div class="dc"><h4>▸ 白棋計畫</h4><p>Bc4 <strong>直接瞄準 f7</strong>，搭配 Nb3 → Nd5 跳馬計畫，Fischer 職業早期招牌。</p></div>
+              <div class="dc"><h4>▸ 黑棋對應</h4><p><strong>6...e6</strong> 封閉主教斜線，接著 Be7 + 0-0 安全易位，也可以 6...e5 趕走 Nd4。</p></div>
+              <div class="dc"><h4>✓ 可以保留</h4><p>a6 阻止 Bb5+ 效果<strong>更重要</strong>，后翼反攻大方向保留，b5 和 Qc7 仍是長期目標。</p></div>
+              <div class="dc"><h4>✗ 必須調整</h4><p>不宜急於易位，<strong>f7 有戰術威脅</strong>，e6 的時機要比其他分支更早走。</p></div>
+            </div></div>
+          </div>
+          <div class="branch-row" data-branch="nj-f4" onclick="toggleBranch(this)">
+            <div class="branch-hd">
+              <div class="branch-icon" style="background:#3a3a10">♙</div>
+              <div class="branch-lbl"><div class="branch-name">六兵攻擊</div><div class="branch-nota">6.f4 — 激進王翼推進</div></div>
+              <div class="branch-summ">最激進，賽跑感最強</div>
+              <span class="chevron">▶</span>
+            </div>
+            <div class="branch-body"><div class="detail-grid">
+              <div class="dc"><h4>▸ 白棋計畫</h4><p>f4 宣示王翼意圖，接著 f5 → g4 → g5，強力兵鏈衝向黑棋國王，節奏最快。</p></div>
+              <div class="dc"><h4>▸ 黑棋對應</h4><p><strong>6...e5</strong> 立即反中央趕走 Nd4，或 6...Qc7 控制中路，必須快速製造后翼壓力。</p></div>
+              <div class="dc"><h4>✓ 可以保留</h4><p>b5 + d5 反攻的<strong>大方向完全保留</strong>，a6 依然有效，Nbd7 配置可以保留。</p></div>
+              <div class="dc"><h4>✗ 必須調整</h4><p><strong>節奏必須加快</strong>，白棋 e5 是真實威脅，后翼反攻要比其他分支更急迫。</p></div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- PRINCIPLES -->
+    <div class="tab-pane" id="pane-nj-principles">
+      <div class="pane-inner"><div class="principles-wrap">
+        <div class="p-box" style="background:linear-gradient(135deg,#16200a,#0a1408);border:1px solid #3a5020;">
+          <h3 style="color:#6abf40">✦ 納依道夫的不變法則</h3>
+          <div class="p-item"><div class="p-num" style="background:#3a5020;color:#6abf40">1</div><div class="p-txt"><strong style="color:#8ddf60">a6 永遠有效</strong>：不管白棋走什麼，只要沒有立即戰術威脅，a6 都是正確的。它封鎖 b5，是納依道夫的生命線。</div></div>
+          <div class="p-item"><div class="p-num" style="background:#3a5020;color:#6abf40">2</div><div class="p-txt"><strong style="color:#8ddf60">后翼反攻優先</strong>：黑棋的目標永遠是 b5 推進和 d5 反擊。不管白棋在王翼怎麼動，黑棋都要製造后翼反壓。</div></div>
+          <div class="p-item"><div class="p-num" style="background:#3a5020;color:#6abf40">3</div><div class="p-txt"><strong style="color:#8ddf60">Nf6 是核心棋子</strong>：這匹馬控制 d5 和 e4，白棋最想釘住它，黑棋要保護或主動交換。</div></div>
+          <div class="p-item"><div class="p-num" style="background:#3a5020;color:#6abf40">4</div><div class="p-txt"><strong style="color:#8ddf60">d6 決定主教方向</strong>：d6 的兵決定 c8 主教走 e6 或 d7，是整個子力配置的關鍵判斷點。</div></div>
+        </div>
+        <div class="cmp-wrap"><table class="cmp-table">
+          <thead><tr><th>白棋第6步</th><th>可保留 ✓</th><th>需調整 ✗</th><th>核心問題</th></tr></thead>
+          <tbody>
+            <tr><td><span class="mono">6.Bg5</span></td><td><span class="chk">✓</span> a6、b5<br><span class="chk">✓</span> e6 方向</td><td><span class="crs">✗</span> Nf6 被釘<br><span class="crs">✗</span> e6 vs h6</td><td>接受釘制還是趕象？</td></tr>
+            <tr><td><span class="mono">6.Be3</span></td><td><span class="chk">✓</span> 整套后翼<br><span class="chk">✓</span> e6+Nbd7</td><td><span class="crs">✗</span> g4-g5 快<br><span class="crs">✗</span> 易位時機</td><td>b5 要比 g5 更早嗎？</td></tr>
+            <tr><td><span class="mono">6.Bc4</span></td><td><span class="chk">✓</span> a6 封 b5<br><span class="chk">✓</span> 后翼方向</td><td><span class="crs">✗</span> f7 有威脅<br><span class="crs">✗</span> 不宜急於易位</td><td>發展中如何防 f7？</td></tr>
+            <tr><td><span class="mono">6.f4</span></td><td><span class="chk">✓</span> b5+d5<br><span class="chk">✓</span> Nbd7</td><td><span class="crs">✗</span> 節奏加快<br><span class="crs">✗</span> e5 威脅真實</td><td>d5 要比 e5 更早嗎？</td></tr>
+          </tbody>
+        </table></div>
+      </div></div>
+    </div>
+  </div><!-- right-col -->
+  </div><!-- shell -->
+</div><!-- view-nj -->
+
+
+<!-- ══════════════════════════════════════
+     OPENING 2: 卡羅康 (ck)
+══════════════════════════════════════ -->
+<div class="opening-view" id="view-ck" data-acc="#4a9fd4">
+
+  <header id="hdr-ck">
+    <div class="h-title">
+      <h1>卡羅康防禦 <span class="acc" style="color:#4a9fd4">主線變例</span></h1>
+      <div class="h-sub">Caro-Kann Defense — Classical Variation &nbsp;|&nbsp; 執黑</div>
+    </div>
+    <div class="tab-bar" id="tabs-ck">
+      <button class="tab active" onclick="switchTab('ck','steps')">📖 逐步走法</button>
+      <button class="tab" onclick="switchTab('ck','branches')">🌿 白棋第4步分支</button>
+      <button class="tab" onclick="switchTab('ck','principles')">💡 核心原則</button>
+    </div>
+  </header>
+
+  <div class="shell">
+  <div class="board-col" id="bcol-ck">
+    <div class="board-wrap">
+      <div class="rank-labels" id="rl-ck"></div>
+      <div class="board-inner">
+        <div class="board-grid" id="board-ck"><svg class="arrow-svg" id="svg-ck"></svg></div>
+        <div class="file-labels" id="fl-ck"></div>
+      </div>
+    </div>
+    <div class="board-nav">
+      <button class="nav-btn" id="prev-ck" onclick="prevStep('ck')" disabled>← 上一步</button>
+      <button class="nav-btn primary" id="next-ck" onclick="nextStep('ck')">下一步 →</button>
+    </div>
+    <div class="kbd-hint">← → 鍵盤翻頁</div>
+  </div>
+
+  <div class="right-col">
+    <div class="tab-pane active" id="pane-ck-steps">
+      <div class="steps-inner">
+        <div class="step-sidebar" id="sb-ck"></div>
+        <div class="step-detail">
+          <div class="notation-bar" id="nota-ck">—</div>
+          <div class="info-title" id="title-ck">—</div>
+          <div class="info-body"  id="body-ck"></div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane" id="pane-ck-branches">
+      <div class="pane-inner">
+        <div class="pane-intro">走到 <span class="mono">1.e4 c6 2.d4 d5 3.Nc3 dxe4 4.Nxe4</span> 之後，<strong style="color:#7ac4e8">白棋有四種不同方向</strong>，黑棋的應對各不相同：</div>
+        <div class="branch-list">
+          <div class="branch-row" data-branch="ck-nd7" onclick="toggleBranch(this)">
+            <div class="branch-hd">
+              <div class="branch-icon" style="background:#0e2030">♞</div>
+              <div class="branch-lbl"><div class="branch-name">古典變例（主線）</div><div class="branch-nota">4...Nd7 — 穩健發展</div></div>
+              <div class="branch-summ">Karpov、Petrosian 最愛</div>
+              <span class="chevron">▶</span>
+            </div>
+            <div class="branch-body"><div class="detail-grid">
+              <div class="dc"><h4>▸ 白棋計畫</h4><p>5.Nf3 + Bc4/Bd3 發展，王翼易位，利用先手優勢製造中央壓力。白棋兵形健全，優勢穩健。</p></div>
+              <div class="dc"><h4>▸ 黑棋對應</h4><p><strong>4...Nd7</strong> 支撐 e6，接著 Ngf6 + Bd6 穩固發展。c8 主教可以走 b7 或 g4，是卡羅康最穩健的路線。</p></div>
+              <div class="dc"><h4>✓ 可以保留</h4><p>c6 阻止白棋在 d5 建立強大兵形的效果<strong>完整保留</strong>，e6 支撐 d5 的結構思路不變。</p></div>
+              <div class="dc"><h4>✗ 必須調整</h4><p>c8 主教的發展路線需要提前規劃，不要讓它被 e6 的兵永久封住。Nd7 雖穩健但有暫時遮擋主教的問題。</p></div>
+            </div></div>
+          </div>
+          <div class="branch-row" data-branch="ck-nf6" onclick="toggleBranch(this)">
+            <div class="branch-hd">
+              <div class="branch-icon" style="background:#1a2a10">♞</div>
+              <div class="branch-lbl"><div class="branch-name">現代變例</div><div class="branch-nota">4...Nf6 — 積極對攻</div></div>
+              <div class="branch-summ">Bf5 搶先出動主教</div>
+              <span class="chevron">▶</span>
+            </div>
+            <div class="branch-body"><div class="detail-grid">
+              <div class="dc"><h4>▸ 白棋計畫</h4><p>5.Nxf6+ gxf6（或 exf6），攻擊黑棋被破壞的兵形。白棋的目標是利用 f 列半開放線和黑棋的雙倍兵弱點。</p></div>
+              <div class="dc"><h4>▸ 黑棋對應</h4><p><strong>4...Nf6</strong>，如果 5.Nxf6+ 接受換馬，黑棋走 gxf6 雖然兵形破壞，但換來了<strong>兩個主教和半開放 g 列</strong>，可以積極反攻。</p></div>
+              <div class="dc"><h4>✓ 可以保留</h4><p>c6 + d5 的中央骨架思路保留，黑棋的整體目標仍是穩固後發展雙主教優勢。</p></div>
+              <div class="dc"><h4>✗ 必須調整</h4><p>接受 Nxf6+ 後兵形變化較大，需要接受 g 列雙倍兵，換取主動反攻機會，心態上是「損形換活力」。</p></div>
+            </div></div>
+          </div>
+          <div class="branch-row" data-branch="ck-e5adv" onclick="toggleBranch(this)">
+            <div class="branch-hd">
+              <div class="branch-icon" style="background:#301020">♙</div>
+              <div class="branch-lbl"><div class="branch-name">前進變例</div><div class="branch-nota">3.e5 — 法式風格</div></div>
+              <div class="branch-summ">白棋鎖住中央，空間優勢</div>
+              <span class="chevron">▶</span>
+            </div>
+            <div class="branch-body"><div class="detail-grid">
+              <div class="dc"><h4>▸ 白棋計畫</h4><p>3.e5 鎖住中央，取得空間優勢，接著 f4 鞏固 e5 陣地，後續 Nf3 + Bd3 + 0-0 進行穩健發展。</p></div>
+              <div class="dc"><h4>▸ 黑棋對應</h4><p><strong>3...Bf5</strong> 是最重要的一步：<strong>搶在 e6 關門之前把 c8 主教出來</strong>。接著 e6 + Nd7 + Ne7 + Nc6，準備用后翼兵推反攻白棋的 e5 陣地。</p></div>
+              <div class="dc"><h4>✓ 可以保留</h4><p>后翼兵推（c5 或 f6）反攻 e5 的<strong>整體方向保留</strong>，只要 Bf5 及時出動，主教活力就不會喪失。</p></div>
+              <div class="dc"><h4>✗ 必須調整</h4><p>比主線更需要提前規劃 c5 的時機。白棋的空間優勢很明顯，黑棋必須積極反攻，不能被動等待。</p></div>
+            </div></div>
+          </div>
+          <div class="branch-row" data-branch="ck-2nc3" onclick="toggleBranch(this)">
+            <div class="branch-hd">
+              <div class="branch-icon" style="background:#20200a">♗</div>
+              <div class="branch-lbl"><div class="branch-name">兩馬變例</div><div class="branch-nota">2.Nc3 — 快速發展</div></div>
+              <div class="branch-summ">避開 d4 正面衝突</div>
+              <span class="chevron">▶</span>
+            </div>
+            <div class="branch-body"><div class="detail-grid">
+              <div class="dc"><h4>▸ 白棋計畫</h4><p>2.Nc3 繞過 2.d4，快速發展子力，接著 d4 + Nf3 + Bc4，製造比主線更靈活的攻擊。</p></div>
+              <div class="dc"><h4>▸ 黑棋對應</h4><p>黑棋同樣走 <strong>2...d5</strong>，接著 3.Nf3 Bg4！（釘住白棋的 Nf3）或 3...dxe4 進入主線形式。維持卡羅康的穩健結構。</p></div>
+              <div class="dc"><h4>✓ 可以保留</h4><p>d5 控制中央的思路<strong>完整保留</strong>，卡羅康的核心邏輯（穩固 d5，避免法式主教問題）在此分支完全適用。</p></div>
+              <div class="dc"><h4>✗ 必須調整</h4><p>白棋的開局更靈活，黑棋不能按固定順序走，需要根據白棋選擇決定先 Bg4 釘馬還是先進行換子。</p></div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane" id="pane-ck-principles">
+      <div class="pane-inner"><div class="principles-wrap">
+        <div class="p-box" style="background:linear-gradient(135deg,#081828,#040c14);border:1px solid #1a4060;">
+          <h3 style="color:#4a9fd4">✦ 卡羅康的不變法則</h3>
+          <div class="p-item"><div class="p-num" style="background:#1a4060;color:#4a9fd4">1</div><div class="p-txt"><strong style="color:#6abfd4">c6 + d5 是骨架</strong>：先走 c6，再走 d5。c6 讓 d5 的兵有後盾支撐，不需要用后來保護，這是卡羅康與法式的最大差異。</div></div>
+          <div class="p-item"><div class="p-num" style="background:#1a4060;color:#4a9fd4">2</div><div class="p-txt"><strong style="color:#6abfd4">提早出動 c8 主教</strong>：卡羅康最大優點就是 c8 主教不會像法式那樣被鎖死。遇到前進變例時，Bf5 是最高優先的一步。</div></div>
+          <div class="p-item"><div class="p-num" style="background:#1a4060;color:#4a9fd4">3</div><div class="p-txt"><strong style="color:#6abfd4">穩健不代表被動</strong>：卡羅康的目的是建立健全兵形後反攻，Karpov 用它打出許多精彩的后翼反壓。穩固是手段，不是目的。</div></div>
+          <div class="p-item"><div class="p-num" style="background:#1a4060;color:#4a9fd4">4</div><div class="p-txt"><strong style="color:#6abfd4">兵形完整是最大優點</strong>：相較於西西里，卡羅康黑棋的兵形幾乎沒有弱點。在殘局中這個優勢非常顯著。</div></div>
+        </div>
+        <div class="cmp-wrap"><table class="cmp-table">
+          <thead><tr><th>白棋變例</th><th>黑棋核心應對</th><th>關鍵優先步</th><th>核心原則</th></tr></thead>
+          <tbody>
+            <tr><td>主線 <span class="mono">3.Nc3</span></td><td>3...dxe4 4...Nd7 或 Nf6</td><td>Bf5 或 Bg4</td><td>穩健發展，保留雙主教</td></tr>
+            <tr><td>前進 <span class="mono">3.e5</span></td><td>立即 <strong>3...Bf5</strong></td><td>Bf5 絕對優先</td><td>主教出來前 e6 不能走</td></tr>
+            <tr><td>交換 <span class="mono">3.exd5</span></td><td>3...cxd5 對稱</td><td>Nf6 + Bf5</td><td>接受對稱，謀求殘局</td></tr>
+            <tr><td>兩馬 <span class="mono">2.Nc3</span></td><td>2...d5，靈活應對</td><td>視情況 Bg4 或換子</td><td>保持 d5 控制，核心不變</td></tr>
+          </tbody>
+        </table></div>
+      </div></div>
+    </div>
+  </div><!-- right-col -->
+  </div><!-- shell -->
+</div><!-- view-ck -->
+
+
+<!-- ══════════════════════════════════════
+     OPENING 3: 后翼棄兵 (qg)
+══════════════════════════════════════ -->
+<div class="opening-view" id="view-qg" data-acc="#9b59b6">
+
+  <header id="hdr-qg">
+    <div class="h-title">
+      <h1>后翼棄兵 <span class="acc" style="color:#c17ef0">接受變例</span></h1>
+      <div class="h-sub">Queen's Gambit Accepted — QGA &nbsp;|&nbsp; 執白</div>
+    </div>
+    <div class="tab-bar" id="tabs-qg">
+      <button class="tab active" onclick="switchTab('qg','steps')">📖 逐步走法</button>
+      <button class="tab" onclick="switchTab('qg','branches')">🌿 白棋後續計畫</button>
+      <button class="tab" onclick="switchTab('qg','principles')">💡 核心原則</button>
+    </div>
+  </header>
+
+  <div class="shell">
+  <div class="board-col" id="bcol-qg">
+    <div class="board-wrap">
+      <div class="rank-labels" id="rl-qg"></div>
+      <div class="board-inner">
+        <div class="board-grid" id="board-qg"><svg class="arrow-svg" id="svg-qg"></svg></div>
+        <div class="file-labels" id="fl-qg"></div>
+      </div>
+    </div>
+    <div class="board-nav">
+      <button class="nav-btn" id="prev-qg" onclick="prevStep('qg')" disabled>← 上一步</button>
+      <button class="nav-btn primary" id="next-qg" onclick="nextStep('qg')">下一步 →</button>
+    </div>
+    <div class="kbd-hint">← → 鍵盤翻頁</div>
+  </div>
+
+  <div class="right-col">
+    <div class="tab-pane active" id="pane-qg-steps">
+      <div class="steps-inner">
+        <div class="step-sidebar" id="sb-qg"></div>
+        <div class="step-detail">
+          <div class="notation-bar" id="nota-qg">—</div>
+          <div class="info-title" id="title-qg">—</div>
+          <div class="info-body"  id="body-qg"></div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane" id="pane-qg-branches">
+      <div class="pane-inner">
+        <div class="pane-intro">走到 <span class="mono">1.d4 d5 2.c4 dxc4 3.Nf3 Nf6 4.e3</span> 或 <span class="mono">4.e4</span> 後，<strong style="color:#c17ef0">白棋有不同的中央計畫</strong>，目標都是吃回 c4 的兵並建立中央優勢：</div>
+        <div class="branch-list">
+          <div class="branch-row" data-branch="qg-classic" onclick="toggleBranch(this)">
+            <div class="branch-hd">
+              <div class="branch-icon" style="background:#200a30">♗</div>
+              <div class="branch-lbl"><div class="branch-name">古典路線</div><div class="branch-nota">3.e3 + Bxc4 — 穩健吃回</div></div>
+              <div class="branch-summ">最直接，快速建立中央</div>
+              <span class="chevron">▶</span>
+            </div>
+            <div class="branch-body"><div class="detail-grid">
+              <div class="dc"><h4>▸ 白棋計畫</h4><p>3.e3 準備 Bxc4 吃回兵，接著 Nc3 + 0-0，建立 d4+e3 的穩健中央。Bc4 對準 f7，威脅性強。</p></div>
+              <div class="dc"><h4>▸ 黑棋對應</h4><p>黑棋通常走 <strong>a6 + b5</strong> 保住 c4 的兵，或者 <strong>e6 + c5</strong> 反擊白棋的 d4，製造不對稱局面。</p></div>
+              <div class="dc"><h4>✓ 白棋優勢</h4><p>發展迅速，Bc4 + Nc3 + 0-0 的配置非常自然流暢，對 f7 的壓力是長期威脅。</p></div>
+              <div class="dc"><h4>✗ 注意事項</h4><p>如果黑棋走 a6 + b5 保住兵，白棋不要急著強行奪回，而是繼續發展加速節奏壓制。</p></div>
+            </div></div>
+          </div>
+          <div class="branch-row" data-branch="qg-e4" onclick="toggleBranch(this)">
+            <div class="branch-hd">
+              <div class="branch-icon" style="background:#1a1040">♘</div>
+              <div class="branch-lbl"><div class="branch-name">中央強攻路線</div><div class="branch-nota">3.e4 — 中央雙兵</div></div>
+              <div class="branch-summ">Kasparov 最愛，最激進</div>
+              <span class="chevron">▶</span>
+            </div>
+            <div class="branch-body"><div class="detail-grid">
+              <div class="dc"><h4>▸ 白棋計畫</h4><p>3.e4 直接建立 d4+e4 的中央雙兵，形成超強的中央控制。接著 Bxc4、Nc3 + 0-0，王翼進攻。Kasparov 在多場大賽中用此路線制勝。</p></div>
+              <div class="dc"><h4>▸ 黑棋對應</h4><p>黑棋可以走 <strong>3...e5</strong> 立即反擊中央，或 <strong>3...Nf6</strong> 先發展再等時機。如果讓白棋維持雙兵，黑棋會非常被動。</p></div>
+              <div class="dc"><h4>✓ 白棋優勢</h4><p>中央控制極強，王翼攻勢後勁十足。d4+e4 的雙兵是白棋的理想型態，空間優勢顯著。</p></div>
+              <div class="dc"><h4>✗ 注意事項</h4><p>雙兵中央需要穩定支撐，如果黑棋成功用 e5 或 c5 打破中央，白棋的兵形可能變成弱點。</p></div>
+            </div></div>
+          </div>
+          <div class="branch-row" data-branch="qg-qgd" onclick="toggleBranch(this)">
+            <div class="branch-hd">
+              <div class="branch-icon" style="background:#0a2520">♜</div>
+              <div class="branch-lbl"><div class="branch-name">拒絕棄兵</div><div class="branch-nota">2...e6 — 后翼棄兵拒絕</div></div>
+              <div class="branch-summ">黑棋拒絕接受，轉入 QGD</div>
+              <span class="chevron">▶</span>
+            </div>
+            <div class="branch-body"><div class="detail-grid">
+              <div class="dc"><h4>▸ 白棋計畫</h4><p>如果黑棋拒絕接受（走 e6 而非 dxc4），轉入 <strong>后翼棄兵拒絕（QGD）</strong>。白棋接著 Nc3 + Nf3 + Bg5，加壓黑棋的中央。</p></div>
+              <div class="dc"><h4>▸ 黑棋對應</h4><p>黑棋走 <strong>e6</strong> 保住 d5 的兵，接著 Nf6 + Be7 + 0-0，進入穩健的防禦體系。黑棋接受略微被動的局面換取兵形健全。</p></div>
+              <div class="dc"><h4>✓ 白棋優勢</h4><p>空間優勢保持，Bg5 + Qc2 的組合可以製造對 e7 的釘住壓力，中長期優勢明顯。</p></div>
+              <div class="dc"><h4>✗ 注意事項</h4><p>QGD 的防禦體系非常嚴密，白棋不能急於求勝，需要耐心等待黑棋出錯或在殘局中兌換出優勢。</p></div>
+            </div></div>
+          </div>
+          <div class="branch-row" data-branch="qg-slav" onclick="toggleBranch(this)">
+            <div class="branch-hd">
+              <div class="branch-icon" style="background:#301010">♙</div>
+              <div class="branch-lbl"><div class="branch-name">斯拉夫防禦</div><div class="branch-nota">2...c6 — 斯拉夫</div></div>
+              <div class="branch-summ">黑棋保留 c8 主教</div>
+              <span class="chevron">▶</span>
+            </div>
+            <div class="branch-body"><div class="detail-grid">
+              <div class="dc"><h4>▸ 白棋計畫</h4><p>黑棋走 c6 支撐 d5，不讓 c8 主教被封住。白棋接著 3.Nf3 Nf6 4.Nc3 dxc4，進入斯拉夫主線，繼續爭奪 c4 的兵。</p></div>
+              <div class="dc"><h4>▸ 黑棋對應</h4><p>斯拉夫的優點是保留了 c8 主教的活動空間（不像 e6 會把主教封死）。黑棋接著 Bf5 或 Bg4 主動出動主教。</p></div>
+              <div class="dc"><h4>✓ 白棋計畫</h4><p>白棋的目標是 Bg5 釘住 Nf6，或 e4 強行打開中央。Meran 變例（e3+b4）是最精彩的進攻路線。</p></div>
+              <div class="dc"><h4>✗ 注意事項</h4><p>斯拉夫的理論很深，黑棋防禦工具完整。白棋需要比 QGD 更精準的計算才能獲得優勢。</p></div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane" id="pane-qg-principles">
+      <div class="pane-inner"><div class="principles-wrap">
+        <div class="p-box" style="background:linear-gradient(135deg,#140a20,#0a0514);border:1px solid #3a1a60;">
+          <h3 style="color:#c17ef0">✦ 后翼棄兵執白的不變法則</h3>
+          <div class="p-item"><div class="p-num" style="background:#3a1a60;color:#c17ef0">1</div><div class="p-txt"><strong style="color:#d4a0f0">c4 是棄兵，不是失誤</strong>：讓黑棋吃掉 c4 是計畫的一部分。白棋的目的是用這個兵換取快速發展、中央控制和開放的主教斜線。</div></div>
+          <div class="p-item"><div class="p-num" style="background:#3a1a60;color:#c17ef0">2</div><div class="p-txt"><strong style="color:#d4a0f0">d4 是白棋的生命線</strong>：整個開局的邏輯都圍繞 d4 的兵。一旦 d4 的兵被打掉，白棋的優勢就大幅縮水。保護 d4 是最高優先。</div></div>
+          <div class="p-item"><div class="p-num" style="background:#3a1a60;color:#c17ef0">3</div><div class="p-txt"><strong style="color:#d4a0f0">Bxc4 比 d4 進一步重要</strong>：白棋要先吃回 c4 的兵讓主教激活，再考慮其他計畫。Bc4 在對角線上的壓力是白棋的核心武器。</div></div>
+          <div class="p-item"><div class="p-num" style="background:#3a1a60;color:#c17ef0">4</div><div class="p-txt"><strong style="color:#d4a0f0">節奏就是優勢</strong>：黑棋多走了一步吃兵（dxc4），白棋的每一步都應該是有效的發展，不能浪費。Nf3 + Nc3 + 0-0 是最高效的發展順序。</div></div>
+        </div>
+        <div class="cmp-wrap"><table class="cmp-table">
+          <thead><tr><th>黑棋選擇</th><th>白棋目標</th><th>關鍵武器</th><th>核心問題</th></tr></thead>
+          <tbody>
+            <tr><td>2...dxc4（接受）</td><td>快速吃回，建立雙兵中央</td><td>Bxc4 + e4</td><td>節奏還是中央誰更重要？</td></tr>
+            <tr><td>2...e6（拒絕 QGD）</td><td>Bg5 釘住，加壓中央</td><td>Bg5 + Qc2</td><td>如何突破黑棋的防禦？</td></tr>
+            <tr><td>2...c6（斯拉夫）</td><td>爭奪 c4，主教斜線競賽</td><td>e3 + Bd3</td><td>如何在兩翼同時施壓？</td></tr>
+            <tr><td>2...Nf6（印度系）</td><td>中央擴張，空間優勢</td><td>Nc3 + e4</td><td>d4+e4 雙兵能否維持？</td></tr>
+          </tbody>
+        </table></div>
+      </div></div>
+    </div>
+  </div><!-- right-col -->
+  </div><!-- shell -->
+</div><!-- view-qg -->
+
+
+<!-- ══════════════════════════════════════
+     OPENING 4: 倫敦體系 (ld)
+══════════════════════════════════════ -->
+<div class="opening-view" id="view-ld" data-acc="#3da65a">
+
+  <header id="hdr-ld">
+    <div class="h-title">
+      <h1>倫敦體系 <span class="acc" style="color:#3da65a">標準建立</span></h1>
+      <div class="h-sub">London System — White Opening &nbsp;|&nbsp; 執白</div>
+    </div>
+    <div class="tab-bar" id="tabs-ld">
+      <button class="tab active" onclick="switchTab('ld','steps')">📖 逐步走法</button>
+      <button class="tab" onclick="switchTab('ld','branches')">🌿 常見例外應對</button>
+      <button class="tab" onclick="switchTab('ld','principles')">💡 核心原則</button>
+    </div>
+  </header>
+
+  <div class="shell">
+  <div class="board-col" id="bcol-ld">
+    <div class="board-wrap">
+      <div class="rank-labels" id="rl-ld"></div>
+      <div class="board-inner">
+        <div class="board-grid" id="board-ld"><svg class="arrow-svg" id="svg-ld"></svg></div>
+        <div class="file-labels" id="fl-ld"></div>
+      </div>
+    </div>
+    <div class="board-nav">
+      <button class="nav-btn" id="prev-ld" onclick="prevStep('ld')" disabled>← 上一步</button>
+      <button class="nav-btn primary" id="next-ld" onclick="nextStep('ld')">下一步 →</button>
+    </div>
+    <div class="kbd-hint">← → 鍵盤翻頁</div>
+  </div>
+
+  <div class="right-col">
+    <!-- STEPS -->
+    <div class="tab-pane active" id="pane-ld-steps">
+      <div class="steps-inner">
+        <div class="step-sidebar" id="sb-ld"></div>
+        <div class="step-detail">
+          <div class="notation-bar" id="nota-ld">—</div>
+          <div class="info-title" id="title-ld">—</div>
+          <div class="info-body"  id="body-ld"></div>
+        </div>
+      </div>
+    </div>
+    <!-- BRANCHES -->
+    <div class="tab-pane" id="pane-ld-branches">
+      <div class="pane-inner">
+        <div class="pane-intro">建立理想陣型時，對手可能挑戰你的主教陣型。點擊展開學習應對：</div>
+        <div class="branch-list">
+          <div class="branch-row" data-branch="ld-Bd6" onclick="toggleBranch(this)">
+            <div class="branch-hd">
+              <div class="branch-icon" style="background:#1a2a10">♝</div>
+              <div class="branch-lbl"><div class="branch-name">對手走 ...Bd6</div><div class="branch-nota">攻擊你的 Bf4</div></div>
+              <div class="branch-summ">不要換！退主教回 Bg3</div>
+              <span class="chevron">▶</span>
+            </div>
+            <div class="branch-body"><div class="detail-grid">
+              <div class="dc"><h4>▸ 對手的意圖</h4><p>對手用 <strong>...Bd6</strong> 直接攻擊你的 Bf4，希望你換主教，失去對 e5 格的控制。</p></div>
+              <div class="dc"><h4>▸ 你的正確應對</h4><p><strong>不要換主教！</strong>把 Bf4 退回 <strong>Bg3</strong>。如果對手換了（Bxg3），你用 <strong>hxg3</strong> 重吃，開放 h 縱線給車！</p></div>
+              <div class="dc"><h4>✓ 退主教的好處</h4><p>hxg3 開放 h 縱線，車發動王翼攻擊。<strong>e5 控制完整保留</strong>，Ne5+Qh5 攻擊照常執行。</p></div>
+              <div class="dc"><h4>✗ 千萬不要</h4><p>不要直接 <strong>Bxd6</strong> 換主教！換了之後對手重吃，e5 格失去控制，Ne5 攻擊就此瓦解。</p></div>
+            </div></div>
+          </div>
+          <div class="branch-row" data-branch="ld-Bf5" onclick="toggleBranch(this)">
+            <div class="branch-hd">
+              <div class="branch-icon" style="background:#102030">♝</div>
+              <div class="branch-lbl"><div class="branch-name">對手走 ...Bf5</div><div class="branch-nota">搶佔斜線控制</div></div>
+              <div class="branch-summ">立刻 Bg3 挑戰，讓他先換</div>
+              <span class="chevron">▶</span>
+            </div>
+            <div class="branch-body"><div class="detail-grid">
+              <div class="dc"><h4>▸ 對手的意圖</h4><p>對手走 <strong>...Bf5</strong>，佔領斜線，限制你的子力空間，準備換掉你的主教。</p></div>
+              <div class="dc"><h4>▸ 你的正確應對</h4><p>立刻走 <strong>Bg3</strong> 挑戰，但<strong>不要主動換主教</strong>。讓對手先換（Bxg3），你再用 hxg3 重吃，開放 h 縱線！</p></div>
+              <div class="dc"><h4>✓ 策略要點</h4><p>讓對手做換子決定。若對手不換，Bg3 繼續控制局面。若換了，<strong>h 縱線開放是攻擊獎勵</strong>。</p></div>
+              <div class="dc"><h4>✗ 千萬不要</h4><p>不要主動走 <strong>Bxf5</strong> 換主教。你要保持主動，讓對手決定是否換子。</p></div>
+            </div></div>
+          </div>
+          <div class="branch-row" data-branch="ld-c4push" onclick="toggleBranch(this)">
+            <div class="branch-hd">
+              <div class="branch-icon" style="background:#302010">♟</div>
+              <div class="branch-lbl"><div class="branch-name">對手推 ...c4</div><div class="branch-nota">攻擊你的 Bd3</div></div>
+              <div class="branch-summ">退 Bc2，主教仍指向 h7</div>
+              <span class="chevron">▶</span>
+            </div>
+            <div class="branch-body"><div class="detail-grid">
+              <div class="dc"><h4>▸ 對手的意圖</h4><p>對手推 <strong>...c4</strong> 攻擊 Bd3，希望趕走主教並佔領后翼空間。</p></div>
+              <div class="dc"><h4>▸ 你的正確應對</h4><p>把 Bd3 退回 <strong>Bc2</strong>（退一格）。主教在 c2 斜線上<strong>依然指向 h7</strong>，攻擊力完全保留！</p></div>
+              <div class="dc"><h4>✓ 退主教的好處</h4><p>Bc2 繼續瞄準 h7，Ne5+Qh5 攻擊<strong>一步都未受影響</strong>。對手后翼佔地，你王翼攻殺。</p></div>
+              <div class="dc"><h4>✗ 別被后翼分心</h4><p>不要跟著去<strong>后翼防守</strong>。倫敦體系的王翼攻擊通常比對手的后翼反壓更快、更致命。</p></div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- PRINCIPLES -->
+    <div class="tab-pane" id="pane-ld-principles">
+      <div class="pane-inner"><div class="principles-wrap">
+        <div class="p-box" style="background:linear-gradient(135deg,#0a1c0e,#060e08);border:1px solid #1e5c28;">
+          <h3 style="color:#3da65a">✦ 倫敦體系的不變法則</h3>
+          <div class="p-item"><div class="p-num" style="background:#1e5c28;color:#3da65a">1</div><div class="p-txt"><strong style="color:#6dce8a">Bf4 必須在 e3 之前！</strong>：這是最重要的順序。先走 Bf4，主教才能出來。若先走 e3，c1 主教被自己的兵永久封死，整個陣型瓦解。</div></div>
+          <div class="p-item"><div class="p-num" style="background:#1e5c28;color:#3da65a">2</div><div class="p-txt"><strong style="color:#6dce8a">e5 格是你的命根子</strong>：兵陣（c3-d4-e3）、Bf4 和 Nf3 的任務都是控制 e5。<strong>Ne5</strong> 是你的主要武器，所有佈局都為它服務。</div></div>
+          <div class="p-item"><div class="p-num" style="background:#1e5c28;color:#3da65a">3</div><div class="p-txt"><strong style="color:#6dce8a">不主動換主教</strong>：遇到 ...Bd6 或 ...Bf5，先退主教（Bg3），讓對手決定是否換。換了之後 hxg3 開放 h 縱線，是額外的攻擊資源。</div></div>
+          <div class="p-item"><div class="p-num" style="background:#1e5c28;color:#3da65a">4</div><div class="p-txt"><strong style="color:#6dce8a">Ne5 → Qh5 是主套路</strong>：陣型完成後跳 Ne5。對手吃馬，兵重吃，騎士退，立刻 Qh5 壓王翼。威脅 h7 將軍，配合 h4-h5 推進攻殺。</div></div>
+        </div>
+        <div class="cmp-wrap"><table class="cmp-table">
+          <thead><tr><th>對手挑戰</th><th>你的應對</th><th>關鍵思維</th><th>最終目的</th></tr></thead>
+          <tbody>
+            <tr><td><span class="mono">...Bd6</span> 攻擊 Bf4</td><td>Bg3（退，不換）→ hxg3</td><td>不丟失 e5 控制</td><td>h 縱線開放 + Ne5</td></tr>
+            <tr><td><span class="mono">...Bf5</span> 佔斜線</td><td>Bg3 挑戰，讓他先換</td><td>主動權在你手上</td><td>hxg3 開 h 縱線</td></tr>
+            <tr><td><span class="mono">...c4</span> 趕 Bd3</td><td>Bc2（退一格）</td><td>主教依然指向 h7</td><td>Ne5+Qh5 照常發動</td></tr>
+            <tr><td>對手后翼擴張</td><td>無視，繼續王翼攻擊</td><td>你的攻擊更快</td><td>在對手到達前攻殺</td></tr>
+          </tbody>
+        </table></div>
+      </div></div>
+    </div>
+  </div><!-- right-col -->
+  </div><!-- shell -->
+</div><!-- view-ld -->
+
+
+<script>
+/* ══════════════════════════════════════
+   PIECES & BOARD ENGINE
+══════════════════════════════════════ */
+const PCW = {wK:'♔',wQ:'♕',wR:'♖',wB:'♗',wN:'♘',wP:'♙'};
+const PCB = {bK:'♚',bQ:'♛',bR:'♜',bB:'♝',bN:'♞',bP:'♟'};
+const cp  = p => p.map(r=>[...r]);
+function mv(p,fr,fc,tr,tc){const q=cp(p);q[tr][tc]=q[fr][fc];q[fr][fc]=null;return q;}
+function iP(){return[
+  ['bR','bN','bB','bQ','bK','bB','bN','bR'],
+  ['bP','bP','bP','bP','bP','bP','bP','bP'],
+  [null,null,null,null,null,null,null,null],
+  [null,null,null,null,null,null,null,null],
+  [null,null,null,null,null,null,null,null],
+  [null,null,null,null,null,null,null,null],
+  ['wP','wP','wP','wP','wP','wP','wP','wP'],
+  ['wR','wN','wB','wQ','wK','wB','wN','wR'],
+];}
+
+/* ══════════════════════════════════════
+   STEP DATA — three openings
+══════════════════════════════════════ */
+
+/* ── NAJDORF ── */
+const STEPS_NJ = [
+  {pos:iP(),hl:{},arrows:[],nota:'— 初始局面 —',title:'初始局面',badge:null,
+   labels:['初始','1.e4','1...c5','2.Nf3/d6','3.d4/cxd4','4.Nxd4/Nf6','5.Nc3/a6⭐','總覽'],
+   body:`這是棋局開始前的標準排列。納依道夫是<strong>黑棋對抗 1.e4 的最尖銳選擇</strong>，用不對稱反抗換取后翼反攻機會。`},
+  {get pos(){return mv(iP(),6,4,4,4);},hl:{'4,4':'hl-y'},arrows:[[4,4,3,3,'#d4a843cc'],[4,4,3,5,'#d4a843cc']],
+   nota:'<span class="cur">1. e4</span>',title:'1. e4 — 白棋先手',badge:'badge-gold',bt:'白棋',
+   body:`白棋走 <strong>1.e4</strong>，佔領中央，打開斜線。黃色格子是剛走到的 e4，金色箭頭顯示兵控制 d5 和 f5。`},
+  {get pos(){let p=iP();p=mv(p,6,4,4,4);return mv(p,1,2,3,2);},
+   hl:{'4,4':'hl-y','3,2':'hl-g'},arrows:[[3,2,4,3,'#27ae60cc'],[3,2,4,1,'#27ae60cc']],
+   nota:'<span class="w">1.e4</span> <span class="cur">c5</span>',title:'1...c5 — 西西里的靈魂',badge:'badge-green',bt:'黑棋',
+   body:`黑棋走 <strong>1...c5</strong>，不對稱地控制 d4。不走 e5 是因為對稱局面對白棋更有利。c5 換取 d 列半開放線，為后翼反攻鋪路。`},
+  {get pos(){let p=iP();p=mv(p,6,4,4,4);p=mv(p,1,2,3,2);p=mv(p,7,6,5,5);return mv(p,1,3,2,3);},
+   hl:{'5,5':'hl-y','2,3':'hl-g'},arrows:[[5,5,3,4,'#d4a843cc'],[5,5,3,6,'#d4a843cc']],
+   nota:'<span class="w">1.e4 c5</span> <span class="cur">2.Nf3</span> <span class="b">d6</span>',title:'2.Nf3 / 2...d6',badge:'badge-gold',bt:'兩方',
+   body:`<strong>白棋 Nf3</strong> 發展馬，準備 d4。<strong>黑棋 d6</strong> 支撐中央，防止 e5 把 Nf6 踢走，為 e5 或 e6 做準備。`},
+  {get pos(){let p=iP();p=mv(p,6,4,4,4);p=mv(p,1,2,3,2);p=mv(p,7,6,5,5);p=mv(p,1,3,2,3);p=mv(p,6,3,4,3);p[4][3]='bP';p[3][2]=null;return p;},
+   hl:{'4,3':'hl-r','4,4':'hl-y'},arrows:[[3,2,4,3,'#c0392bcc']],
+   nota:'<span class="w">2.Nf3 d6</span> <span class="cur">3.d4</span> <span class="b">cxd4</span>',title:'3.d4 / cxd4 — 中央大換子',badge:'badge-red',bt:'換子',
+   body:`白棋 d4 打開中央，黑棋立即吃掉（紅色格子）。這個換子是西西里的核心：黑棋開放 c 列，形成不對稱結構換取反攻機會。`},
+  {get pos(){let p=iP();p=mv(p,6,4,4,4);p=mv(p,1,2,3,2);p=mv(p,7,6,5,5);p=mv(p,1,3,2,3);p=mv(p,6,3,4,3);p[4][3]='bP';p[3][2]=null;p[4][3]='wN';p[5][5]=null;return mv(p,0,6,2,5);},
+   hl:{'4,3':'hl-y','2,5':'hl-g'},arrows:[[4,3,2,4,'#d4a843cc'],[2,5,4,4,'#27ae60cc']],
+   nota:'<span class="w">3.d4 cxd4</span> <span class="cur">4.Nxd4</span> <span class="b">Nf6</span>',title:'4.Nxd4 / 4...Nf6 — 馬的對峙',badge:'badge-gold',bt:'子力',
+   body:`白棋馬吃回 d4（黃色），控制中央要道。黑棋 Nf6（綠色）一步威脅 e4、控制 d5、清空 g8 準備易位，是整個納依道夫最重要的棋子。`},
+  // step 7: 5...a6 — fix second arrow (a6→b7 is wrong; show b7→b5 future plan)
+  {get pos(){let p=iP();p=mv(p,6,4,4,4);p=mv(p,1,2,3,2);p=mv(p,7,6,5,5);p=mv(p,1,3,2,3);p=mv(p,6,3,4,3);p[4][3]='bP';p[3][2]=null;p[4][3]='wN';p[5][5]=null;p=mv(p,0,6,2,5);p=mv(p,7,1,5,2);return mv(p,1,0,2,0);},
+   hl:{'5,2':'hl-y','2,0':'hl-g'},
+   arrows:[[2,0,3,1,'#27ae60ee'],[1,1,3,1,'#27ae60aa']],
+   nota:'<span class="w">4.Nxd4 Nf6</span> <span class="cur">5.Nc3</span> <span class="b">a6 ⭐</span>',title:'5...a6 — 納依道夫的靈魂！',badge:'badge-green',bt:'納依道夫核心',
+   body:`<strong>黑棋 a6</strong>：封鎖 b5（阻止白棋馬或主教），準備未來推 b5 反攻，同時保留彈性。Najdorf：<em>「a6 是我送給後代棋手的禮物。」</em>`},
+  {get pos(){let p=iP();p=mv(p,6,4,4,4);p=mv(p,1,2,3,2);p=mv(p,7,6,5,5);p=mv(p,1,3,2,3);p=mv(p,6,3,4,3);p[4][3]='bP';p[3][2]=null;p[4][3]='wN';p[5][5]=null;p=mv(p,0,6,2,5);p=mv(p,7,1,5,2);p=mv(p,1,0,2,0);return p;},
+   hl:{'4,4':'hl-y','4,3':'hl-y','2,5':'hl-b','2,0':'hl-g','2,3':'hl-g'},
+   arrows:[[2,0,3,1,'#27ae60cc'],[2,5,4,4,'#c0392bcc'],[4,3,2,4,'#d4a843cc']],
+   nota:'<span class="w">5.Nc3</span> <span class="b">a6</span> — 納依道夫完整建立',title:'局面總覽',badge:'badge-blue',bt:'戰略',
+   body:`白棋計畫：Bg5/Be3 + 王翼推進。黑棋計畫：e6 + Be7 + 易位，然後 <strong>b5 → d5 后翼反攻</strong>。<strong>賽跑</strong>——白棋衝王翼，黑棋衝后翼，誰先到位誰掌握主動。`},
+];
+
+/* ── CARO-KANN ── */
+const STEPS_CK = [
+  {pos:iP(),hl:{},arrows:[],nota:'— 初始局面 —',title:'初始局面',badge:null,
+   labels:['初始','1.e4','1...c6','2.d4','2...d5','3.Nc3 dxe4','4.Nxe4 Bf5⭐','總覽'],
+   body:`這是棋局開始前的標準排列。卡羅康防禦是<strong>黑棋對抗 1.e4 最穩健的選擇之一</strong>，用 c6 支撐 d5，避免法式的主教問題。`},
+  {get pos(){return mv(iP(),6,4,4,4);},hl:{'4,4':'hl-y'},arrows:[[4,4,3,3,'#4a9fd4cc'],[4,4,3,5,'#4a9fd4cc']],
+   nota:'<span class="cur">1. e4</span>',title:'1. e4 — 白棋先走',badge:'badge-gold',bt:'白棋',
+   body:`白棋走 <strong>1.e4</strong>，佔領中央。面對這步棋，卡羅康的想法是：先準備好 d5，讓 d5 的兵有 c6 做後盾，而不是立刻衝 e5（那樣法式的主教會被封死）。`},
+  {get pos(){let p=iP();p=mv(p,6,4,4,4);return mv(p,1,2,2,2);},hl:{'4,4':'hl-y','2,2':'hl-g'},arrows:[[2,2,3,3,'#4a9fd4cc']],
+   nota:'<span class="w">1.e4</span> <span class="cur">c6</span>',title:'1...c6 — 卡羅康的第一步',badge:'badge-blue',bt:'黑棋',
+   body:`黑棋走 <strong>1...c6</strong>（c7→c6）：這就是卡羅康！<br><br>為什麼不直接走 d5？因為 1...d5 之後白棋 exd5 Qxd5，黑棋要用后來吃回，后過早出動在中央會被白棋的馬攻擊。c6 讓下一步的 d5 有後盾，兵能安穩站在中央。`},
+  {get pos(){let p=iP();p=mv(p,6,4,4,4);p=mv(p,1,2,2,2);return mv(p,6,3,4,3);},
+   hl:{'4,4':'hl-y','4,3':'hl-y','2,2':'hl-g'},arrows:[[4,3,3,4,'#d4a843cc'],[4,3,3,2,'#d4a843cc']],
+   nota:'<span class="w">1.e4 c6</span> <span class="cur">2.d4</span>',title:'2.d4 — 白棋建立雙兵中央',badge:'badge-gold',bt:'白棋',
+   body:`白棋走 <strong>2.d4</strong>，建立 e4+d4 的強大雙兵中央，控制 c5、e5、c3 等關鍵格。<br><br>現在白棋在中央佔有優勢，黑棋必須立刻反擊——下一步就是 d5！`},
+  {get pos(){let p=iP();p=mv(p,6,4,4,4);p=mv(p,1,2,2,2);p=mv(p,6,3,4,3);return mv(p,1,3,3,3);},
+   hl:{'4,4':'hl-y','4,3':'hl-y','3,3':'hl-g'},arrows:[[3,3,4,4,'#4a9fd4cc'],[3,3,4,2,'#4a9fd4cc']],
+   nota:'<span class="w">2.d4</span> <span class="cur">d5</span>',title:'2...d5 — 反擊中央！',badge:'badge-blue',bt:'黑棋',
+   body:`黑棋走 <strong>2...d5</strong>，立即反擊白棋的 e4 兵！<br><br>這就是 c6 在第一步的功效：d5 有 c6 做後盾，白棋不能 exd5 Qxd5 發展。綠色箭頭顯示 d5 兵攻擊 c4 和 e4。<br><br>現在白棋必須決定如何應對 d5 的挑戰。`},
+  {get pos(){let p=iP();p=mv(p,6,4,4,4);p=mv(p,1,2,2,2);p=mv(p,6,3,4,3);p=mv(p,1,3,3,3);p=mv(p,7,1,5,2);p[4][4]=null;p[3][3]=null;p[4][4]='bP';return p;},
+   hl:{'4,4':'hl-g','5,2':'hl-y'},arrows:[[5,2,4,4,'#d4a843cc'],[5,2,3,4,'#d4a843cc']],
+   nota:'<span class="w">3.Nc3</span> <span class="b">dxe4</span>',title:'3.Nc3 / dxe4 — 換子',badge:'badge-gold',bt:'換子',
+   body:`<strong>白棋 Nc3</strong> 支援 e4，黑棋 <strong>dxe4</strong> 吃掉 e4 兵（綠色格子）。<br><br>黑棋換掉了 d5 換取 e 列半開放，白棋接著用馬吃回。注意：卡羅康比法式的好處就在這裡——黑棋沒有被封死的主教！`},
+  {get pos(){let p=iP();p=mv(p,6,4,4,4);p=mv(p,1,2,2,2);p=mv(p,6,3,4,3);p=mv(p,1,3,3,3);p=mv(p,7,1,5,2);p[4][4]=null;p[3][3]=null;p[4][4]='bP';p[4][4]=null;p[5][2]=null;p[4][4]='wN';p=mv(p,0,6,2,5);let bf5r=5,bf5c=5;p[bf5r][bf5c]=null;p[3][5]='bB';return p;},
+   hl:{'4,4':'hl-y','3,5':'hl-g','2,5':'hl-b'},arrows:[[3,5,4,4,'#4a9fd4cc'],[3,5,2,3,'#4a9fd4cc']],
+   nota:'<span class="w">4.Nxe4</span> <span class="b">Bf5 ⭐</span>',title:'4...Bf5 — 卡羅康的靈魂之步！',badge:'badge-blue',bt:'卡羅康核心',
+   body:`白棋馬吃回 e4（黃色），黑棋立即走 <strong>4...Bf5</strong>（綠色）！<br><br>這就是卡羅康最重要的一步：主教發展到積極位置，攻擊白棋的 e4 馬，同時為 e6 + Nd7 + Ngf6 的完整發展鋪路。<br><br><em>卡羅康 vs 法式的最大差異：這個主教不會被封死！</em>`},
+  {get pos(){let p=iP();p=mv(p,6,4,4,4);p=mv(p,1,2,2,2);p=mv(p,6,3,4,3);p=mv(p,1,3,3,3);p=mv(p,7,1,5,2);p[4][4]=null;p[3][3]=null;p[4][4]='wN';p[5][2]=null;p=mv(p,0,6,2,5);p[3][5]='bB';p=mv(p,7,6,5,5);p=mv(p,1,4,2,4);return p;},
+   hl:{'4,4':'hl-y','3,5':'hl-b','2,5':'hl-g','2,2':'hl-g','2,4':'hl-g'},
+   arrows:[[3,5,4,4,'#4a9fd4cc'],[2,5,4,4,'#c0392bcc'],[4,4,2,5,'#d4a843cc']],
+   nota:'<span class="w">4.Nxe4</span> <span class="b">Bf5 4...Nf6 5...e6</span>',title:'局面總覽',badge:'badge-blue',bt:'戰略',
+   body:`卡羅康的標準形勢。<br><br><strong>黑棋的優勢：</strong>兵形健全無弱點，c8 主教自由出動，殘局優良。<br><br><strong>黑棋的計畫：</strong>Nd7 + Ngf6 + Be7 + 0-0，然後用后翼的 c5 或 b5 反攻。<br><br><strong>核心記憶：</strong>卡羅康 = 穩固兵形 + 自由主教。法式 = 同樣穩固但主教被封。`},
+];
+
+/* ── QUEEN'S GAMBIT ── */
+const STEPS_QG = [
+  {pos:iP(),hl:{},arrows:[],nota:'— 初始局面 —',title:'初始局面',badge:null,
+   labels:['初始','1.d4','2.c4 棄兵','2...dxc4','3.Nf3','3...Nf6','4.e3 Bxc4','總覽'],
+   body:`這是棋局開始前的標準排列。后翼棄兵是<strong>執白方 1.d4 後最經典的開局</strong>，用 c4 換取發展優勢和中央控制，執白的核心策略是「用兵換節奏」。`},
+  {get pos(){return mv(iP(),6,3,4,3);},hl:{'4,3':'hl-y'},arrows:[[4,3,3,2,'#9b59b6cc'],[4,3,3,4,'#9b59b6cc']],
+   nota:'<span class="cur">1. d4</span>',title:'1. d4 — 后翼開局',badge:'badge-gold',bt:'白棋',
+   body:`白棋走 <strong>1.d4</strong>，d 列兵推到第4格，佔領中央。紫色箭頭顯示 d4 兵控制 c5 和 e5。<br><br>d4 開局比 e4 更穩健，中央控制更持久，特別適合追求長期優勢的棋手。`},
+  {get pos(){let p=iP();p=mv(p,6,3,4,3);p=mv(p,1,3,3,3);return mv(p,6,2,4,2);},
+   hl:{'4,3':'hl-y','3,3':'hl-b','4,2':'hl-r'},arrows:[[4,2,3,3,'#c0392bcc'],[4,2,5,3,'#9b59b6cc']],
+   nota:'<span class="w">1.d4 d5</span> <span class="cur">2.c4</span>',title:'2.c4 — 棄兵！',badge:'badge-red',bt:'棄兵',
+   body:`白棋走 <strong>2.c4</strong>，這就是「后翼棄兵」！<br><br>白棋故意把 c4 的兵送出去，讓黑棋可以吃（紅色格）。換取的是：<strong>比黑棋更快的發展速度</strong>和 <strong>d4+e4 雙兵中央的可能性</strong>。<br><br>黑棋現在有選擇：接受（dxc4）或拒絕（e6 或 c6）。`},
+  {get pos(){let p=iP();p=mv(p,6,3,4,3);p=mv(p,1,3,3,3);p=mv(p,6,2,4,2);p[4][2]=null;p[3][3]=null;p[4][2]='bP';return p;},
+   hl:{'4,2':'hl-g','4,3':'hl-y'},arrows:[[4,2,3,3,'#27ae60cc']],
+   nota:'<span class="w">2.c4</span> <span class="cur">dxc4</span>',title:'2...dxc4 — 黑棋接受棄兵',badge:'badge-green',bt:'接受',
+   body:`黑棋走 <strong>2...dxc4</strong>（d5 吃 c4），接受白棋的棄兵！<br><br>這個兵暫時在黑棋手上，但白棋不久就會吃回來。黑棋接受的目的是：<strong>讓白棋多花一步來吃回</strong>，爭取一點時間來發展或部署。<br><br>接下來白棋需要盡快吃回 c4 的兵，同時繼續高效發展。`},
+  {get pos(){let p=iP();p=mv(p,6,3,4,3);p=mv(p,1,3,3,3);p=mv(p,6,2,4,2);p[4][2]=null;p[3][3]=null;p[4][2]='bP';p=mv(p,7,6,5,5);return p;},
+   hl:{'5,5':'hl-y','4,3':'hl-y','4,2':'hl-b'},arrows:[[5,5,3,4,'#9b59b6cc'],[5,5,3,6,'#9b59b6cc']],
+   nota:'<span class="w">2...dxc4</span> <span class="cur">3.Nf3</span>',title:'3.Nf3 — 發展優先',badge:'badge-gold',bt:'白棋',
+   body:`白棋走 <strong>3.Nf3</strong>，先發展馬而不是立刻吃回 c4。為什麼？<br><br>• <strong>發展比一個兵更重要</strong>：馬到 f3 控制 d4 和 e5，支援中央<br>• 準備下一步 e3 或 e4，讓主教可以出來吃回 c4<br>• 靈活保留選擇：可以走 e3（穩健）或 e4（激進）`},
+  {get pos(){let p=iP();p=mv(p,6,3,4,3);p=mv(p,1,3,3,3);p=mv(p,6,2,4,2);p[4][2]=null;p[3][3]=null;p[4][2]='bP';p=mv(p,7,6,5,5);return mv(p,0,6,2,5);},
+   hl:{'5,5':'hl-y','2,5':'hl-g','4,3':'hl-y'},arrows:[[2,5,4,2,'#27ae60cc'],[2,5,4,4,'#27ae60cc']],
+   nota:'<span class="w">3.Nf3</span> <span class="cur">Nf6</span>',title:'3...Nf6 — 黑棋對稱發展',badge:'badge-green',bt:'黑棋',
+   body:`黑棋走 <strong>3...Nf6</strong>，馬到 f6，模仿白棋的發展節奏。<br><br>Nf6 同時做了三件事：控制 d5 和 e4，準備易位，施壓白棋中央。<br><br>現在白棋需要找個辦法吃回 c4 的兵，同時繼續高效發展。`},
+  {get pos(){let p=iP();p=mv(p,6,3,4,3);p=mv(p,1,3,3,3);p=mv(p,6,2,4,2);p[4][2]=null;p[3][3]=null;p[4][2]='bP';p=mv(p,7,6,5,5);p=mv(p,0,6,2,5);p=mv(p,6,4,5,4);p[5][4]=null;p[5][2]='wB';p[4][2]=null;return p;},
+   hl:{'5,2':'hl-y','4,3':'hl-y','5,5':'hl-y','2,5':'hl-g'},
+   arrows:[[5,2,3,4,'#9b59b6cc'],[5,2,1,0,'#9b59b6cc']],
+   nota:'<span class="w">4.e3</span> <span class="cur">Bxc4</span>',title:'4.e3 / Bxc4 — 吃回棄兵！',badge:'badge-gold',bt:'白棋',
+   body:`白棋走 <strong>4.e3</strong>，主教斜線打開，接著主教可以走到 c4 吃回棄兵。<br><br>Bc4（黃色）：主教回到理想位置，瞄準 f7，同時在 d5 格施加壓力。紫色箭頭顯示主教的控制範圍。<br><br>白棋現在的陣形：d4+e3 穩健中央，Bc4 對角線壓力，Nf3 控制中央——<strong>發展完整，局面優良</strong>。`},
+  {get pos(){let p=iP();p=mv(p,6,3,4,3);p=mv(p,1,3,3,3);p=mv(p,6,2,4,2);p[4][2]=null;p[3][3]=null;p=mv(p,7,6,5,5);p=mv(p,0,6,2,5);p=mv(p,7,1,5,2);p[5][2]=null;p[4][2]=null;p[5][2]='wB';return p;},
+   hl:{'5,5':'hl-y','5,2':'hl-y','4,3':'hl-y','2,5':'hl-b','5,2':'hl-y'},
+   arrows:[[5,2,3,4,'#9b59b6cc'],[5,5,3,4,'#d4a843cc'],[5,5,3,6,'#d4a843cc']],
+   nota:'<span class="w">Nf3 Bxc4 Nc3</span> — 后翼棄兵標準形勢',title:'局面總覽',badge:'badge-gold',bt:'戰略',
+   body:`后翼棄兵的標準形勢。<br><br><strong>白棋的優勢：</strong>發展領先、中央控制、Bc4 斜線壓力。<br><br><strong>白棋的計畫：</strong>0-0 易位，然後 e4 打開中央（若時機允許），或 Qe2 + Rd1 增強中央壓力。<br><br><strong>核心記憶：</strong>后翼棄兵用一個兵換節奏。<strong>節奏就是優勢</strong>——每一步都要有效，不能浪費。`},
+];
+
+/* ── LONDON SYSTEM ── */
+const STEPS_LD = [
+  {pos:iP(),hl:{},arrows:[],nota:'— 初始局面 —',title:'初始局面',badge:null,
+   labels:['初始'],
+   body:`倫敦體系是<strong>執白最穩固的選擇之一</strong>。核心優點：<em>不管對手走什麼，幾乎都建立同一個陣型</em>，節省開局腦力，讓你專注在中局思維。<br><br>接下來你將學會 7 步建立「理想陣型」，以及最重要的 <strong>Ne5 → Qh5 攻擊套路</strong>。`},
+  {get pos(){return mv(iP(),6,3,4,3);},
+   hl:{'4,3':'hl-y'},arrows:[[4,3,3,2,'#3da65acc'],[4,3,3,4,'#3da65acc']],
+   nota:'<span class="cur">1. d4</span>',title:'1. d4 — 控制中央',badge:'badge-gold',bt:'白棋',
+   labels:[null,'1.d4'],
+   body:`白棋走 <strong>1.d4</strong>，d 列兵推到第 4 格，控制中央。<br><br>倫敦體系的起手式永遠是 d4。綠色箭頭顯示 d4 兵控制的 c5 和 e5 格。<br><br><strong>e5 格</strong>是整個倫敦體系的核心目標——你之後所有的棋子都要指向它。`},
+  {get pos(){let p=iP();p=mv(p,6,3,4,3);return mv(p,7,2,4,5);},
+   hl:{'4,5':'hl-y','4,3':'hl-b'},arrows:[[4,5,3,4,'#3da65acc'],[4,5,5,6,'#3da65acc']],
+   nota:'<span class="w">1.d4</span> <span class="cur">2. Bf4</span>',title:'2. Bf4 ⭐ — 主教必須先出！',badge:'badge-red',bt:'最關鍵順序',
+   labels:[null,null,'2.Bf4⭐'],
+   body:`白棋走 <strong>2.Bf4</strong>，c1 主教發展到 f4。<br><br><strong>⚠️ 最重要的順序提醒</strong>：主教<u>必須</u>在 e3 之前出來！如果先走 e3，c1 主教就被自己的兵永遠封死，整個體系瓦解。<br><br>Bf4 的目標：控制 e5（綠色箭頭），並為王翼攻勢做準備。`},
+  {get pos(){let p=iP();p=mv(p,6,3,4,3);p=mv(p,7,2,4,5);return mv(p,6,4,5,4);},
+   hl:{'5,4':'hl-y','4,5':'hl-b','4,3':'hl-b'},arrows:[[4,3,3,2,'#3da65aaa'],[4,3,3,4,'#3da65aaa']],
+   nota:'<span class="w">1.d4 Bf4</span> <span class="cur">3. e3</span>',title:'3. e3 — 兵形三角第一角',badge:'badge-gold',bt:'白棋',
+   labels:[null,null,null,'3.e3'],
+   body:`白棋走 <strong>3.e3</strong>，e 列兵從 e2 推到 e3。<br><br>e3 的功用：<br>• 支撐 d4 兵<br>• 為 f1 主教打開斜線（稍後走 Bd3）<br>• 開始建立兵的三角形（c3-d4-e3）<br><br>注意：主教已在 f4 安全就位。現在走 e3 完全沒問題。`},
+  {get pos(){let p=iP();p=mv(p,6,3,4,3);p=mv(p,7,2,4,5);p=mv(p,6,4,5,4);return mv(p,7,6,5,5);},
+   hl:{'5,5':'hl-y','4,3':'hl-b','4,5':'hl-b'},arrows:[[5,5,3,4,'#3da65acc'],[5,5,4,3,'#3da65acc']],
+   nota:'<span class="w">1.d4 Bf4 e3</span> <span class="cur">4. Nf3</span>',title:'4. Nf3 — 騎士控制 e5',badge:'badge-gold',bt:'白棋',
+   labels:[null,null,null,null,'4.Nf3'],
+   body:`白棋走 <strong>4.Nf3</strong>，g1 騎士到 f3，同時控制 d4 和 e5（綠色箭頭），並為王翼易位清路。<br><br>更重要的是：<strong>Nf3 是 Ne5 攻擊的起點</strong>——這匹馬最終要跳到 e5，配合后走 Qh5，發動主要攻勢。`},
+  {get pos(){let p=iP();p=mv(p,6,3,4,3);p=mv(p,7,2,4,5);p=mv(p,6,4,5,4);p=mv(p,7,6,5,5);return mv(p,7,1,6,3);},
+   hl:{'6,3':'hl-y','5,5':'hl-b','4,3':'hl-b'},arrows:[[6,3,4,4,'#3da65acc'],[6,3,4,2,'#3da65aaa']],
+   nota:'<span class="w">Bf4 e3 Nf3</span> <span class="cur">5. Nbd2</span>',title:'5. Nbd2 — 第二匹騎士就位',badge:'badge-gold',bt:'白棋',
+   labels:[null,null,null,null,null,'5.Nbd2'],
+   body:`白棋走 <strong>5.Nbd2</strong>，b1 騎士到 d2（而不是 c3！）。<br><br>為什麼是 d2 而不是 c3？<br>• <strong>c3 留給兵</strong>（下一步要走 c3 完成兵的三角）<br>• d2 的騎士可再跳到 e4 或 f1，靈活調動<br>• 整體架構不互相干擾`},
+  {get pos(){let p=iP();p=mv(p,6,3,4,3);p=mv(p,7,2,4,5);p=mv(p,6,4,5,4);p=mv(p,7,6,5,5);p=mv(p,7,1,6,3);return mv(p,6,2,5,2);},
+   hl:{'5,2':'hl-y','4,3':'hl-b','5,4':'hl-b'},arrows:[[5,2,4,3,'#3da65acc'],[4,3,3,4,'#3da65acc']],
+   nota:'<span class="w">Nf3 Nbd2</span> <span class="cur">6. c3</span>',title:'6. c3 — 兵的三角完成！',badge:'badge-gold',bt:'白棋',
+   labels:[null,null,null,null,null,null,'6.c3'],
+   body:`白棋走 <strong>6.c3</strong>，c 列兵推到 c3，<strong>兵的三角形完成：c3 - d4 - e3</strong>！<br><br>這個鐵三角的作用：<br>• 幾乎沒有弱點<br>• 穩固支撐 d4<br>• 阻止對手騎士跳進 d4 或 b4<br>• 讓你的陣地固若金湯`},
+  {get pos(){let p=iP();p=mv(p,6,3,4,3);p=mv(p,7,2,4,5);p=mv(p,6,4,5,4);p=mv(p,7,6,5,5);p=mv(p,7,1,6,3);p=mv(p,6,2,5,2);return mv(p,7,5,5,3);},
+   hl:{'5,3':'hl-y','4,5':'hl-b','5,5':'hl-b'},arrows:[[5,3,3,5,'#3da65acc'],[5,3,2,6,'#3da65aaa'],[4,5,3,4,'#3da65aaa']],
+   nota:'<span class="w">c3</span> <span class="cur">7. Bd3</span> ✓',title:'7. Bd3 ✓ — 理想陣型完成！',badge:'badge-green',bt:'陣型完成',
+   labels:[null,null,null,null,null,null,null,'7.Bd3✓'],
+   body:`白棋走 <strong>7.Bd3</strong>，f1 主教到 d3，<strong>主教對準 h7！</strong>（綠色箭頭）<br><br>🏆 <strong>理想陣型完成</strong>：<br>• 兵陣：c3-d4-e3（鐵三角）<br>• Bf4：控制 e5<br>• Bd3：瞄準 h7（王翼攻擊矛頭）<br>• Nf3 + Nbd2：騎士就緒<br><br><strong>下一步：0-0 易位，然後執行 Ne5 攻擊！</strong>`},
+  {get pos(){let p=iP();p=mv(p,6,3,4,3);p=mv(p,7,2,4,5);p=mv(p,6,4,5,4);p=mv(p,7,6,5,5);p=mv(p,7,1,6,3);p=mv(p,6,2,5,2);p=mv(p,7,5,5,3);p=mv(p,5,5,3,4);return p;},
+   hl:{'3,4':'hl-y','5,3':'hl-b','4,5':'hl-b'},arrows:[[3,4,1,5,'#3da65acc'],[3,4,1,3,'#c0392bcc'],[5,3,3,5,'#3da65aaa']],
+   nota:'<span class="w">0-0</span> <span class="cur">Ne5</span> → Qh5',title:'Ne5 → Qh5 — 主要攻擊套路！',badge:'badge-red',bt:'攻擊',
+   labels:[null,null,null,null,null,null,null,null,'Ne5攻擊'],
+   body:`易位後，騎士從 f3 跳到 <strong>e5</strong>（黃色）！<br><br><strong>標準攻擊流程：</strong><br>① Ne5（騎士跳 e5，要充分保護）<br>② 對手通常吃掉騎士（...Nxe5）<br>③ 你用兵重吃（dxe5 或 fxe5）<br>④ 對手騎士被攻，必須退走<br>⑤ 立刻 <strong>Qh5！</strong> 后壓王翼<br><br>Qh5 後威脅 h7 將軍。對手若推 g6 擋，你的后在 h4 繼續施壓，接著推 h4-h5 展開全面王翼攻勢。`},
+];
+
+/* ══════════════════════════════════════
+   OPENING STATE — one object per opening
+══════════════════════════════════════ */
+const OPENINGS = {
+  nj: { steps: STEPS_NJ, cur: 0 },
+  ck: { steps: STEPS_CK, cur: 0 },
+  qg: { steps: STEPS_QG, cur: 0 },
+  ld: { steps: STEPS_LD, cur: 0 },
+};
+let activeOpening = 'nj';
+
+/* ══════════════════════════════════════
+   BOARD SIZE
+══════════════════════════════════════ */
+function calcSq() {
+  const vw = window.innerWidth, vh = window.innerHeight;
+  let sq;
+  if (vw < 700) {
+    const byHeight = Math.floor(vh * 0.38 / 8);
+    const byWidth  = Math.floor((vw - 24) / 8);
+    sq = Math.min(byHeight, byWidth);
+  } else {
+    const maxH = vh - 130;
+    const maxW = Math.min(vw * 0.42, 460);
+    sq = Math.floor(Math.min(maxH, maxW) / 8);
+  }
+  sq = Math.max(32, Math.min(sq, 58));
+  document.documentElement.style.setProperty('--sq', sq + 'px');
+  Object.keys(OPENINGS).forEach(id => {
+    const svg = document.getElementById('svg-'+id);
+    if (svg) { svg.setAttribute('width', sq*8); svg.setAttribute('height', sq*8); }
+  });
+
+  // Mobile: set --sb-top so step-sidebar sticks right below board-col
+  if (vw < 700) {
+    requestAnimationFrame(() => {
+      const topNav = document.querySelector('.top-nav');
+      const hdr    = document.querySelector('.opening-view.active header');
+      const bcol   = document.querySelector('.opening-view.active .board-col');
+      if (topNav && hdr && bcol) {
+        const sbTop = topNav.offsetHeight + hdr.offsetHeight + bcol.offsetHeight;
+        document.documentElement.style.setProperty('--sb-top', sbTop + 'px');
+      }
+    });
+  }
+  return sq;
+}
+
+/* ══════════════════════════════════════
+   RENDER BOARD
+══════════════════════════════════════ */
+function renderBoard(id) {
+  const sq  = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sq'));
+  const {steps, cur} = OPENINGS[id];
+  const s   = steps[cur];
+  const el  = document.getElementById('board-'+id);
+  const svg = document.getElementById('svg-'+id);
+  [...el.children].forEach(c => { if (c !== svg) c.remove(); });
+
+  for (let r=0;r<8;r++) for (let c=0;c<8;c++) {
+    const div = document.createElement('div');
+    div.className = 'sq '+((r+c)%2===0?'light':'dark');
+    const k = r+','+c;
+    if (s.hl && s.hl[k]) div.classList.add(s.hl[k]);
+    const pc = s.pos[r][c];
+    if (pc) {
+      const sp = document.createElement('span');
+      sp.className = pc.startsWith('w')?'wp':'bp';
+      sp.textContent = pc.startsWith('w')?PCW[pc]:PCB[pc];
+      div.appendChild(sp);
+    }
+    el.appendChild(div);
+  }
+
+  svg.innerHTML='';
+  if (s.arrows && s.arrows.length) {
+    s.arrows.forEach(([fr,fc,tr,tc,col])=>{
+      const x1=fc*sq+sq/2,y1=fr*sq+sq/2,x2=tc*sq+sq/2,y2=tr*sq+sq/2;
+      const dx=x2-x1,dy=y2-y1,len=Math.sqrt(dx*dx+dy*dy);
+      if (len<1) return;
+      const ux=dx/len,uy=dy/len,hs=12;
+      const ex=x2-ux*hs*0.5,ey=y2-uy*hs*0.5;
+      const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+      line.setAttribute('x1',x1);line.setAttribute('y1',y1);
+      line.setAttribute('x2',ex);line.setAttribute('y2',ey);
+      line.setAttribute('stroke',col||'#d4a843cc');
+      line.setAttribute('stroke-width','4');line.setAttribute('stroke-linecap','round');
+      svg.appendChild(line);
+      const perp=[-uy*hs*0.65,ux*hs*0.65];
+      const poly=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+      poly.setAttribute('points',[[x2,y2],[ex+perp[0],ey+perp[1]],[ex-perp[0],ey-perp[1]]].map(p=>p.join(',')).join(' '));
+      poly.setAttribute('fill',col||'#d4a843cc');svg.appendChild(poly);
+    });
+  }
+}
+
+/* ══════════════════════════════════════
+   RENDER COORDS
+══════════════════════════════════════ */
+function renderCoords(id) {
+  const sq = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sq'));
+  const rl = document.getElementById('rl-'+id); rl.innerHTML='';
+  for(let i=8;i>=1;i--){const s=document.createElement('span');s.textContent=i;s.style.height=sq+'px';rl.appendChild(s);}
+  const fl = document.getElementById('fl-'+id); fl.innerHTML='';
+  ['a','b','c','d','e','f','g','h'].forEach(f=>{const s=document.createElement('span');s.textContent=f;fl.appendChild(s);});
+}
+
+/* ══════════════════════════════════════
+   BUILD STEP SIDEBAR
+══════════════════════════════════════ */
+function buildSidebar(id) {
+  const sb = document.getElementById('sb-'+id);
+  sb.innerHTML='';
+  const steps = OPENINGS[id].steps;
+  steps.forEach((s,i) => {
+    if (id==='nj' && i===0) {
+      const pl=document.createElement('span'); pl.className='phase-label'; pl.textContent='▸ 骨架'; sb.appendChild(pl);
+    }
+    if (id==='nj' && i===5) {
+      const pl=document.createElement('span'); pl.className='phase-label'; pl.textContent='▸ 核心'; sb.appendChild(pl);
+    }
+    const btn=document.createElement('button');
+    btn.className='step-btn'+(i===0?' active':'');
+    btn.innerHTML=`<span class="num">${i+1}</span><span class="label-text">${s.labels?s.labels[i]:'步驟'+(i+1)}</span>`;
+    btn.onclick=()=>go(id,i);
+    sb.appendChild(btn);
+  });
+}
+
+/* ══════════════════════════════════════
+   GO TO STEP
+══════════════════════════════════════ */
+function go(id, idx) {
+  OPENINGS[id].cur = idx;
+  const s = OPENINGS[id].steps[idx];
+  renderBoard(id);
+  document.getElementById('nota-'+id).innerHTML = s.nota;
+  document.getElementById('title-'+id).innerHTML = s.title+(s.badge?` <span class="badge ${s.badge}">${s.bt}</span>`:'');
+  document.getElementById('body-'+id).innerHTML  = s.body;
+  document.querySelectorAll('#sb-'+id+' .step-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+  document.getElementById('prev-'+id).disabled = idx===0;
+  document.getElementById('next-'+id).disabled = idx===OPENINGS[id].steps.length-1;
+  // No scroll on mobile — board is sticky, detail scrolls naturally
+}
+function prevStep(id){ const o=OPENINGS[id]; if(o.cur>0) go(id,o.cur-1); }
+function nextStep(id){ const o=OPENINGS[id]; if(o.cur<o.steps.length-1) go(id,o.cur+1); }
+
+/* ══════════════════════════════════════
+   SWITCH OPENING
+══════════════════════════════════════ */
+const ACC = {nj:'#d4a843', ck:'#4a9fd4', qg:'#9b59b6', ld:'#3da65a'};
+const ACC2= {nj:'#f0c96a', ck:'#7ac4e8', qg:'#c17ef0', ld:'#6dce8a'};
+const ACTIVE_CLS = {nj:'active-nj', ck:'active-ck', qg:'active-qg', ld:'active-ld'};
+
+function switchOpening(id) {
+  activeOpening = id;
+  // views
+  document.querySelectorAll('.opening-view').forEach(v=>v.classList.toggle('active',v.id==='view-'+id));
+  // top nav buttons
+  document.querySelectorAll('.opener-btn').forEach((b,i)=>{
+    const ids=['nj','ck','qg','ld'];
+    b.classList.remove('active-nj','active-ck','active-qg','active-ld');
+    if (ids[i]===id) b.classList.add(ACTIVE_CLS[id]);
+  });
+  // accent
+  document.documentElement.style.setProperty('--acc', ACC[id]);
+  document.documentElement.style.setProperty('--acc2', ACC2[id]);
+  // re-render board for active opening (in case sq changed)
+  renderBoard(id);
+}
+
+/* ══════════════════════════════════════
+   SWITCH TAB (per opening)
+══════════════════════════════════════ */
+function switchTab(id, name) {
+  const panes = ['steps','branches','principles'];
+  panes.forEach(n=>{
+    const el=document.getElementById('pane-'+id+'-'+n);
+    if(el) el.classList.toggle('active', n===name);
+  });
+  document.querySelectorAll('#tabs-'+id+' .tab').forEach((t,i)=>t.classList.toggle('active',panes[i]===name));
+
+  // When switching back to steps, restore board to current step
+  if (name === 'steps') {
+    renderBoard(id);
+    const s = OPENINGS[id].steps[OPENINGS[id].cur];
+    document.getElementById('nota-'+id).innerHTML = s.nota;
+  }
+
+  // On mobile, recalculate sticky top after tab switch (sidebar may appear/disappear)
+  if (window.innerWidth < 700) {
+    requestAnimationFrame(() => {
+      const topNav = document.querySelector('.top-nav');
+      const hdr    = document.querySelector('.opening-view.active header');
+      const bcol   = document.querySelector('.opening-view.active .board-col');
+      if (topNav && hdr && bcol) {
+        const sbTop = topNav.offsetHeight + hdr.offsetHeight + bcol.offsetHeight;
+        document.documentElement.style.setProperty('--sb-top', sbTop + 'px');
+      }
+    });
+  }
+}
+
+/* ══════════════════════════════════════
+   BRANCH POSITIONS
+   Each branch has a pos, hl, arrows, nota for board display
+══════════════════════════════════════ */
+
+// Helper: build najdorf base position (after 5.Nc3 a6)
+function njBase() {
+  let p=iP();p=mv(p,6,4,4,4);p=mv(p,1,2,3,2);p=mv(p,7,6,5,5);p=mv(p,1,3,2,3);
+  p=mv(p,6,3,4,3);p[4][3]='bP';p[3][2]=null;p[4][3]='wN';p[5][5]=null;
+  p=mv(p,0,6,2,5);p=mv(p,7,1,5,2);p=mv(p,1,0,2,0);return p;
+}
+// Helper: build caro-kann base (after 4.Nxe4)
+function ckBase() {
+  let p=iP();p=mv(p,6,4,4,4);p=mv(p,1,2,2,2);p=mv(p,6,3,4,3);p=mv(p,1,3,3,3);
+  p=mv(p,7,1,5,2);p[4][4]=null;p[3][3]=null;p[4][4]='wN';p[5][2]=null;return p;
+}
+// Helper: build London System ideal setup (after 7 white moves)
+function ldBase() {
+  let p=iP();
+  p=mv(p,6,3,4,3); // 1.d4: d2→d4
+  p=mv(p,7,2,4,5); // 2.Bf4: c1→f4
+  p=mv(p,6,4,5,4); // 3.e3: e2→e3
+  p=mv(p,7,6,5,5); // 4.Nf3: g1→f3
+  p=mv(p,7,1,6,3); // 5.Nbd2: b1→d2
+  p=mv(p,6,2,5,2); // 6.c3: c2→c3
+  p=mv(p,7,5,5,3); // 7.Bd3: f1→d3
+  return p;
+}
+// Helper: build QG base (after 1.d4 d5 2.c4 dxc4 3.Nf3 Nf6)
+function qgBase() {
+  let p=iP();p=mv(p,6,3,4,3);p=mv(p,1,3,3,3);p=mv(p,6,2,4,2);
+  p[4][2]=null;p[3][3]=null;p[4][2]='bP';p=mv(p,7,6,5,5);p=mv(p,0,6,2,5);return p;
+}
+
+const BRANCH_POS = {
+  // ── NAJDORF branches (after 5.Nc3 a6, white plays 6th move) ──
+  'nj-Bg5': {
+    // Bg5: bishop from f1 to g5 (row3,col6). njBase already cleared f1 implicitly? No—
+    // njBase moves: e4,c5,Nf3,d6,d4,cxd4,Nxd4,Nf6,Nc3,a6. f1 bishop still on f1=[7,5].
+    get pos(){ let p=njBase(); p[3][6]='wB'; p[7][5]=null; return p; },
+    hl:{'3,6':'hl-y','2,5':'hl-r'},
+    arrows:[[3,6,2,5,'#c0392bcc'],[3,6,1,4,'#c0392baa']],
+    nota:'<span class="w">5.Nc3 a6</span> <span class="cur">6.Bg5</span> — 釘住 Nf6'
+  },
+  'nj-Be3': {
+    // Be3: bishop from f1 to e3 (row5,col4)
+    get pos(){ let p=njBase(); p[5][4]='wB'; p[7][5]=null; return p; },
+    hl:{'5,4':'hl-y'},
+    arrows:[[5,4,4,3,'#d4a843cc'],[6,5,4,5,'#c0392baa']],
+    nota:'<span class="w">5.Nc3 a6</span> <span class="cur">6.Be3</span> — 英格利希體系'
+  },
+  'nj-Bc4': {
+    // Bc4: bishop from f1 to c4 (row4,col2). Arrow: c4 diagonal → f7 (row1,col5)
+    get pos(){ let p=njBase(); p[4][2]='wB'; p[7][5]=null; return p; },
+    hl:{'4,2':'hl-y'},
+    arrows:[[4,2,1,5,'#c0392bcc'],[4,2,3,3,'#d4a843aa']],
+    nota:'<span class="w">5.Nc3 a6</span> <span class="cur">6.Bc4</span> — 瞄準 f7'
+  },
+  'nj-f4': {
+    // 6.f4: f2→f4 (row4,col5)
+    get pos(){ let p=njBase(); p=mv(p,6,5,4,5); return p; },
+    hl:{'4,5':'hl-y'},
+    arrows:[[4,5,3,5,'#c0392bcc'],[4,5,3,4,'#d4a843aa']],
+    nota:'<span class="w">5.Nc3 a6</span> <span class="cur">6.f4</span> — 六兵攻擊'
+  },
+
+  // ── CARO-KANN branches ──
+  // Classical: 4...Bf5 (main line). Show position after 4.Nxe4 Bf5
+  'ck-nd7': {
+    get pos(){
+      let p=ckBase();
+      p[3][5]='bB'; // Bf5: f5=row3,col5
+      p[0][1]=null; p[1][3]='bN'; // Nd7: b8(row0,col1)→d7(row1,col3)
+      return p;
+    },
+    hl:{'4,4':'hl-y','3,5':'hl-g','1,3':'hl-b'},
+    arrows:[[3,5,4,4,'#4a9fd4cc'],[1,3,2,4,'#27ae60aa'],[1,3,3,2,'#27ae60aa']],
+    nota:'<span class="w">4.Nxe4</span> <span class="cur">Bf5</span> <span class="b">Nd7</span> — 古典主線'
+  },
+  // Modern: 4...Nf6 (Nf6 challenges the knight)
+  'ck-nf6': {
+    get pos(){
+      let p=ckBase();
+      p=mv(p,0,6,2,5); // Nf6: g8(row0,col6)→f6(row2,col5)
+      return p;
+    },
+    hl:{'4,4':'hl-y','2,5':'hl-g'},
+    arrows:[[2,5,4,4,'#c0392bcc'],[4,4,2,5,'#4a9fd4cc']],
+    nota:'<span class="w">4.Nxe4</span> <span class="cur">Nf6</span> — 現代變例，挑戰白馬'
+  },
+  // Advance: 1.e4 c6 2.d4 d5 3.e5 — does NOT involve dxe4, different structure
+  'ck-e5adv': {
+    get pos(){
+      let p=iP();
+      p=mv(p,6,4,4,4); // 1.e4
+      p=mv(p,1,2,2,2); // 1...c6
+      p=mv(p,6,3,4,3); // 2.d4
+      p=mv(p,1,3,3,3); // 2...d5
+      p=mv(p,4,4,3,4); // 3.e5 (e4→e5)
+      return p;
+    },
+    hl:{'3,4':'hl-r','3,3':'hl-b'},
+    arrows:[[3,4,2,3,'#c0392bcc'],[0,2,3,5,'#4a9fd4cc']],
+    nota:'<span class="w">1.e4 c6 2.d4 d5</span> <span class="cur">3.e5</span> — 前進變例，黑棋必須立即 Bf5！'
+  },
+  // Two Knights: 2.Nc3
+  'ck-2nc3': {
+    get pos(){
+      let p=iP();
+      p=mv(p,6,4,4,4); // 1.e4
+      p=mv(p,1,2,2,2); // 1...c6
+      p=mv(p,7,1,5,2); // 2.Nc3
+      p=mv(p,1,3,3,3); // 2...d5
+      return p;
+    },
+    hl:{'5,2':'hl-y','3,3':'hl-g','4,4':'hl-y'},
+    arrows:[[5,2,3,3,'#4a9fd4cc'],[5,2,4,4,'#d4a843cc']],
+    nota:'<span class="cur">2.Nc3</span> <span class="b">d5</span> — 兩馬變例'
+  },
+
+  // ── LONDON SYSTEM branches ──
+  // ld-Bd6: opponent plays ...Bd6 attacking Bf4
+  'ld-Bd6': {
+    get pos(){
+      let p=ldBase();
+      p=mv(p,1,3,3,3); // black d7→d5
+      p[0][5]=null;     // remove f8 bishop
+      p[2][3]='bB';     // black bishop on d6(row2,col3)
+      return p;
+    },
+    hl:{'2,3':'hl-r','4,5':'hl-y','5,3':'hl-b'},
+    arrows:[[2,3,4,5,'#c0392bcc'],[5,3,3,5,'#3da65acc']],
+    nota:'<span class="b">...Bd6</span> 攻擊 Bf4 — 正確應對：<span class="cur">Bg3！不換！</span>'
+  },
+  // ld-Bf5: opponent plays ...Bf5
+  'ld-Bf5': {
+    get pos(){
+      let p=ldBase();
+      p=mv(p,1,4,2,4); // black e7→e6
+      p[0][2]=null;     // remove c8 bishop
+      p[3][5]='bB';     // black bishop on f5(row3,col5)
+      return p;
+    },
+    hl:{'3,5':'hl-r','4,5':'hl-y'},
+    arrows:[[3,5,5,3,'#c0392bcc'],[4,5,3,4,'#3da65acc']],
+    nota:'<span class="b">...Bf5</span> 搶斜線 — 正確應對：<span class="cur">Bg3，讓他先換</span>'
+  },
+  // ld-c4push: opponent pushes ...c4 attacking Bd3
+  'ld-c4push': {
+    get pos(){
+      let p=ldBase();
+      p=mv(p,1,3,3,3); // black d7→d5
+      p[1][2]=null;     // remove c7 pawn
+      p[4][2]='bP';     // black pawn on c4(row4,col2)
+      return p;
+    },
+    hl:{'4,2':'hl-r','5,3':'hl-y'},
+    arrows:[[4,2,5,3,'#c0392bcc'],[5,3,6,2,'#3da65acc']],
+    nota:'<span class="b">...c4</span> 攻擊 Bd3 — 正確應對：<span class="cur">Bc2（退一格）</span>'
+  },
+
+  // ── QUEEN'S GAMBIT branches ──
+  // Classical: e3 then Bxc4. Bishop lands on c4 = row4,col2
+  'qg-classic': {
+    get pos(){
+      let p=qgBase();
+      p=mv(p,6,4,5,4); // e2→e3
+      p[4][2]='wB';    // Bxc4: bishop takes on c4 (row4,col2), replacing bP
+      p[7][5]=null;    // f1 bishop gone
+      return p;
+    },
+    hl:{'4,2':'hl-y','5,5':'hl-y'},
+    arrows:[[4,2,1,5,'#9b59b6cc'],[4,2,3,3,'#9b59b6aa']],
+    nota:'<span class="w">3.Nf3 Nf6 4.e3</span> <span class="cur">Bxc4</span> — 古典路線，主教吃回'
+  },
+  // e4 central push
+  'qg-e4': {
+    get pos(){ let p=qgBase(); p=mv(p,6,4,4,4); return p; },
+    hl:{'4,4':'hl-r','4,3':'hl-y','4,2':'hl-b'},
+    arrows:[[4,4,3,3,'#9b59b6cc'],[4,4,3,5,'#9b59b6cc']],
+    nota:'<span class="w">3.Nf3 Nf6</span> <span class="cur">4.e4</span> — 中央雙兵強攻'
+  },
+  // QGD: Black plays e6 instead of dxc4
+  'qg-qgd': {
+    get pos(){
+      let p=iP();
+      p=mv(p,6,3,4,3); // 1.d4
+      p=mv(p,1,3,3,3); // 1...d5
+      p=mv(p,6,2,4,2); // 2.c4
+      p=mv(p,1,4,2,4); // 2...e6 (black plays e6, NOT dxc4)
+      p=mv(p,7,6,5,5); // 3.Nf3
+      return p;
+    },
+    hl:{'4,3':'hl-y','4,2':'hl-b','2,4':'hl-g','3,3':'hl-b'},
+    arrows:[[2,4,3,3,'#27ae60cc'],[4,2,3,3,'#9b59b6aa']],
+    nota:'<span class="w">1.d4 d5 2.c4</span> <span class="cur">e6</span> — 拒絕棄兵（QGD），d5 穩固'
+  },
+  // Slav: 2...c6
+  'qg-slav': {
+    get pos(){
+      let p=iP();
+      p=mv(p,6,3,4,3); // 1.d4
+      p=mv(p,1,3,3,3); // 1...d5
+      p=mv(p,6,2,4,2); // 2.c4
+      p=mv(p,1,2,2,2); // 2...c6 (Slav)
+      p=mv(p,7,6,5,5); // 3.Nf3
+      return p;
+    },
+    hl:{'4,3':'hl-y','4,2':'hl-b','2,2':'hl-g','3,3':'hl-b'},
+    arrows:[[2,2,3,3,'#27ae60cc'],[4,2,3,3,'#9b59b6aa']],
+    nota:'<span class="w">1.d4 d5 2.c4</span> <span class="cur">c6</span> — 斯拉夫防禦，支撐 d5'
+  },
+};
+
+/* ══════════════════════════════════════
+   BRANCH ACCORDION — updates board
+══════════════════════════════════════ */
+function toggleBranch(row) {
+  const wasOpen = row.classList.contains('open');
+  row.closest('.branch-list').querySelectorAll('.branch-row').forEach(r=>r.classList.remove('open'));
+
+  // Find which opening this branch belongs to
+  const view = row.closest('.opening-view');
+  const id = view.id.replace('view-','');
+
+  if (!wasOpen) {
+    row.classList.add('open');
+    // Show branch position on board
+    const key = row.dataset.branch;
+    if (key && BRANCH_POS[key]) {
+      const bp = BRANCH_POS[key];
+      showBranchBoard(id, bp);
+    }
+  } else {
+    // Closing: restore last step position
+    renderBoard(id);
+    document.getElementById('nota-'+id).innerHTML = OPENINGS[id].steps[OPENINGS[id].cur].nota;
+  }
+}
+
+function showBranchBoard(id, bp) {
+  const sq  = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sq'));
+  const el  = document.getElementById('board-'+id);
+  const svg = document.getElementById('svg-'+id);
+  const pos = bp.pos;
+  const hl  = bp.hl || {};
+  const arrows = bp.arrows || [];
+
+  [...el.children].forEach(c=>{ if(c!==svg) c.remove(); });
+  for(let r=0;r<8;r++) for(let c=0;c<8;c++){
+    const div=document.createElement('div');
+    div.className='sq '+((r+c)%2===0?'light':'dark');
+    const k=r+','+c;
+    if(hl[k]) div.classList.add(hl[k]);
+    const pc=pos[r][c];
+    if(pc){ const sp=document.createElement('span'); sp.className=pc.startsWith('w')?'wp':'bp'; sp.textContent=pc.startsWith('w')?PCW[pc]:PCB[pc]; div.appendChild(sp); }
+    el.appendChild(div);
+  }
+  svg.innerHTML='';
+  arrows.forEach(([fr,fc,tr,tc,col])=>{
+    const x1=fc*sq+sq/2,y1=fr*sq+sq/2,x2=tc*sq+sq/2,y2=tr*sq+sq/2;
+    const dx=x2-x1,dy=y2-y1,len=Math.sqrt(dx*dx+dy*dy);if(len<1)return;
+    const ux=dx/len,uy=dy/len,hs=12,ex=x2-ux*hs*0.5,ey=y2-uy*hs*0.5;
+    const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',x1);line.setAttribute('y1',y1);line.setAttribute('x2',ex);line.setAttribute('y2',ey);
+    line.setAttribute('stroke',col||'#d4a843cc');line.setAttribute('stroke-width','4');line.setAttribute('stroke-linecap','round');
+    svg.appendChild(line);
+    const perp=[-uy*hs*0.65,ux*hs*0.65];
+    const poly=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+    poly.setAttribute('points',[[x2,y2],[ex+perp[0],ey+perp[1]],[ex-perp[0],ey-perp[1]]].map(p=>p.join(',')).join(' '));
+    poly.setAttribute('fill',col||'#d4a843cc');svg.appendChild(poly);
+  });
+  // Update notation bar
+  if(bp.nota) document.getElementById('nota-'+id).innerHTML = bp.nota;
+}
+
+/* ══════════════════════════════════════
+   KEYBOARD NAV
+══════════════════════════════════════ */
+document.addEventListener('keydown', e=>{
+  if (e.key==='ArrowLeft')  prevStep(activeOpening);
+  if (e.key==='ArrowRight') nextStep(activeOpening);
+});
+
+/* ══════════════════════════════════════
+   INIT
+══════════════════════════════════════ */
+function init() {
+  calcSq();
+  ['nj','ck','qg','ld'].forEach(id=>{
+    renderCoords(id);
+    buildSidebar(id);
+    go(id,0);
+  });
+  switchOpening('nj');
+}
+window.addEventListener('resize',()=>{
+  calcSq();
+  ['nj','ck','qg','ld'].forEach(id=>{
+    renderCoords(id);
+    renderBoard(id);
+  });
+});
+window.onload = init;
+</script>
+</body>
+</html>
