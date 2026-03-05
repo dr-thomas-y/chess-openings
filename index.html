@@ -1268,8 +1268,8 @@ const STEPS_LD = [
    OPENING STATE — one object per opening
 ══════════════════════════════════════ */
 const OPENINGS = {
-  nj: { steps: STEPS_NJ, cur: 0 },
-  ck: { steps: STEPS_CK, cur: 0 },
+  nj: { steps: STEPS_NJ, cur: 0, flipped: true },
+  ck: { steps: STEPS_CK, cur: 0, flipped: true },
   qg: { steps: STEPS_QG, cur: 0 },
   ld: { steps: STEPS_LD, cur: 0 },
 };
@@ -1317,13 +1317,15 @@ function calcSq() {
 ══════════════════════════════════════ */
 function renderBoard(id) {
   const sq  = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sq'));
-  const {steps, cur} = OPENINGS[id];
+  const {steps, cur, flipped} = OPENINGS[id];
   const s   = steps[cur];
   const el  = document.getElementById('board-'+id);
   const svg = document.getElementById('svg-'+id);
   [...el.children].forEach(c => { if (c !== svg) c.remove(); });
 
-  for (let r=0;r<8;r++) for (let c=0;c<8;c++) {
+  for (let ri=0;ri<8;ri++) for (let ci=0;ci<8;ci++) {
+    const r = flipped ? 7-ri : ri;
+    const c = flipped ? 7-ci : ci;
     const div = document.createElement('div');
     div.className = 'sq '+((r+c)%2===0?'light':'dark');
     const k = r+','+c;
@@ -1338,10 +1340,13 @@ function renderBoard(id) {
     el.appendChild(div);
   }
 
+  const toX = c => flipped ? (7-c)*sq+sq/2 : c*sq+sq/2;
+  const toY = r => flipped ? (7-r)*sq+sq/2 : r*sq+sq/2;
+
   svg.innerHTML='';
   if (s.arrows && s.arrows.length) {
     s.arrows.forEach(([fr,fc,tr,tc,col])=>{
-      const x1=fc*sq+sq/2,y1=fr*sq+sq/2,x2=tc*sq+sq/2,y2=tr*sq+sq/2;
+      const x1=toX(fc),y1=toY(fr),x2=toX(tc),y2=toY(tr);
       const dx=x2-x1,dy=y2-y1,len=Math.sqrt(dx*dx+dy*dy);
       if (len<1) return;
       const ux=dx/len,uy=dy/len,hs=12;
@@ -1365,10 +1370,13 @@ function renderBoard(id) {
 ══════════════════════════════════════ */
 function renderCoords(id) {
   const sq = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sq'));
+  const {flipped} = OPENINGS[id];
   const rl = document.getElementById('rl-'+id); rl.innerHTML='';
-  for(let i=8;i>=1;i--){const s=document.createElement('span');s.textContent=i;s.style.height=sq+'px';rl.appendChild(s);}
+  const ranks = flipped ? [1,2,3,4,5,6,7,8] : [8,7,6,5,4,3,2,1];
+  ranks.forEach(i=>{const s=document.createElement('span');s.textContent=i;s.style.height=sq+'px';rl.appendChild(s);});
   const fl = document.getElementById('fl-'+id); fl.innerHTML='';
-  ['a','b','c','d','e','f','g','h'].forEach(f=>{const s=document.createElement('span');s.textContent=f;fl.appendChild(s);});
+  const files = flipped ? ['h','g','f','e','d','c','b','a'] : ['a','b','c','d','e','f','g','h'];
+  files.forEach(f=>{const s=document.createElement('span');s.textContent=f;fl.appendChild(s);});
 }
 
 /* ══════════════════════════════════════
