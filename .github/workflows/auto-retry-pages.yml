@@ -1,0 +1,24 @@
+name: Auto-retry Pages Deployment
+
+on:
+  workflow_run:
+    workflows: ["pages-build-deployment"]
+    types: [completed]
+
+jobs:
+  retry-if-failed:
+    # Only retry the first attempt — prevents infinite retry loops
+    if: ${{ github.event.workflow_run.conclusion == 'failure' && github.event.workflow_run.run_attempt == 1 }}
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Re-run failed pages deployment
+        run: |
+          echo "Pages deployment failed on attempt 1. Auto-retrying..."
+          gh api \
+            repos/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }}/rerun-failed-jobs \
+            -X POST
+          echo "Retry triggered."
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
