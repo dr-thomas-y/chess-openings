@@ -12,14 +12,24 @@ jobs:
       pull-requests: write
       contents: read
     steps:
-      - name: Create PR if not exists
+      - name: Create PR if no open PR exists
         run: |
-          gh pr create \
+          OPEN=$(gh pr list \
             --repo ${{ github.repository }} \
             --head ${{ github.ref_name }} \
             --base main \
-            --title "Auto: ${{ github.ref_name }}" \
-            --body "Auto-created PR for branch ${{ github.ref_name }}" \
-          || echo "PR already exists, skipping"
+            --state open \
+            --json number \
+            --jq length)
+          if [ "$OPEN" = "0" ]; then
+            gh pr create \
+              --repo ${{ github.repository }} \
+              --head ${{ github.ref_name }} \
+              --base main \
+              --title "Auto: ${{ github.ref_name }}" \
+              --body "Auto-created PR for branch ${{ github.ref_name }}"
+          else
+            echo "Open PR already exists, skipping creation"
+          fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
