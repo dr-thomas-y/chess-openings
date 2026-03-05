@@ -597,7 +597,7 @@ header {
           <div class="branch-row" data-branch="nj-Bg5" onclick="toggleBranch(this)">
             <div class="branch-hd">
               <div class="branch-icon" style="background:#3a1a10">♝</div>
-              <div class="branch-lbl"><div class="branch-name">英格利希攻擊</div><div class="branch-nota">6.Bg5 — 釘住 Nf6</div></div>
+              <div class="branch-lbl"><div class="branch-name">古典主線</div><div class="branch-nota">6.Bg5 — 釘住 Nf6</div></div>
               <div class="branch-summ">Fischer 最愛，最複雜主線</div>
               <span class="chevron">▶</span>
             </div>
@@ -725,12 +725,12 @@ header {
     </div>
     <div class="tab-pane" id="pane-ck-branches">
       <div class="pane-inner">
-        <div class="pane-intro">走到 <span class="mono">1.e4 c6 2.d4 d5 3.Nc3 dxe4 4.Nxe4</span> 之後，<strong style="color:#7ac4e8">白棋有四種不同方向</strong>，黑棋的應對各不相同：</div>
+        <div class="pane-intro">以下列出卡羅康的四種主要變化方向。前兩項（4...Nd7、4...Nf6）是走到 <span class="mono">1.e4 c6 2.d4 d5 3.Nc3 dxe4 4.Nxe4</span> 後<strong style="color:#7ac4e8">黑棋的第4步選擇</strong>；後兩項（前進變例、兩馬變例）則是<strong style="color:#7ac4e8">白棋在第3步或第2步就走不同方向</strong>的獨立分支，不經過 4.Nxe4：</div>
         <div class="branch-list">
           <div class="branch-row" data-branch="ck-nd7" onclick="toggleBranch(this)">
             <div class="branch-hd">
               <div class="branch-icon" style="background:#0e2030">♞</div>
-              <div class="branch-lbl"><div class="branch-name">古典變例（主線）</div><div class="branch-nota">4...Nd7 — 穩健發展</div></div>
+              <div class="branch-lbl"><div class="branch-name">卡爾波夫變例</div><div class="branch-nota">4...Nd7 — 穩健發展</div></div>
               <div class="branch-summ">Karpov、Petrosian 最愛</div>
               <span class="chevron">▶</span>
             </div>
@@ -857,12 +857,12 @@ header {
     </div>
     <div class="tab-pane" id="pane-qg-branches">
       <div class="pane-inner">
-        <div class="pane-intro">走到 <span class="mono">1.d4 d5 2.c4 dxc4 3.Nf3 Nf6 4.e3</span> 或 <span class="mono">4.e4</span> 後，<strong style="color:#c17ef0">白棋有不同的中央計畫</strong>，目標都是吃回 c4 的兵並建立中央優勢：</div>
+        <div class="pane-intro">前兩項是黑棋走 <span class="mono">2...dxc4</span> <strong style="color:#c17ef0">接受棄兵（QGA）</strong>後，走到 <span class="mono">3.Nf3 Nf6</span>，白棋第4步的兩種中央計畫。後兩項（拒絕、斯拉夫）是黑棋在<strong style="color:#c17ef0">第2步就拒絕吃兵</strong>的獨立開局，屬於平行分支，不在 QGA 的棋譜樹之內：</div>
         <div class="branch-list">
           <div class="branch-row" data-branch="qg-classic" onclick="toggleBranch(this)">
             <div class="branch-hd">
               <div class="branch-icon" style="background:#200a30">♗</div>
-              <div class="branch-lbl"><div class="branch-name">古典路線</div><div class="branch-nota">3.e3 + Bxc4 — 穩健吃回</div></div>
+              <div class="branch-lbl"><div class="branch-name">古典路線</div><div class="branch-nota">4.e3 + Bxc4 — 穩健吃回</div></div>
               <div class="branch-summ">最直接，快速建立中央</div>
               <span class="chevron">▶</span>
             </div>
@@ -876,7 +876,7 @@ header {
           <div class="branch-row" data-branch="qg-e4" onclick="toggleBranch(this)">
             <div class="branch-hd">
               <div class="branch-icon" style="background:#1a1040">♘</div>
-              <div class="branch-lbl"><div class="branch-name">中央強攻路線</div><div class="branch-nota">3.e4 — 中央雙兵</div></div>
+              <div class="branch-lbl"><div class="branch-name">中央強攻路線</div><div class="branch-nota">4.e4 — 中央雙兵</div></div>
               <div class="branch-summ">Kasparov 最愛，最激進</div>
               <span class="chevron">▶</span>
             </div>
@@ -1155,7 +1155,7 @@ const STEPS_CK = [
    hl:{'3,5':'hl-g'},arrows:[[3,5,4,4,'#4a9fd4cc'],[3,5,2,3,'#4a9fd4cc']],
    nota:'<span class="w">4.Nxe4</span> <span class="b">Bf5 ⭐</span>',title:'4...Bf5 — 卡羅康的靈魂之步！',badge:'badge-blue',bt:'卡羅康核心',
    body:`黑棋立即走 <strong>4...Bf5</strong>（綠色）！c8 主教發展到積極位置，攻擊白棋的 e4 馬。<br><br>同時為 e6 + Nd7 + Ngf6 的完整發展鋪路。<br><br><em>卡羅康 vs 法式的最大差異：這個主教不會被封死！</em>`},
-  {get pos(){let p=iP();p=mv(p,6,4,4,4);p=mv(p,1,2,2,2);p=mv(p,6,3,4,3);p=mv(p,1,3,3,3);p=mv(p,7,1,5,2);p[4][4]=null;p[3][3]=null;p[4][4]='wN';p[5][2]=null;p=mv(p,0,6,2,5);p[0][2]=null;p[3][5]='bB';p=mv(p,7,6,5,5);p=mv(p,1,4,2,4);return p;},
+  {get pos(){let p=iP();p=mv(p,6,4,4,4);p=mv(p,1,2,2,2);p=mv(p,6,3,4,3);p=mv(p,1,3,3,3);p=mv(p,7,1,5,2);p[4][4]=null;p[3][3]=null;p[4][4]='wN';p[5][2]=null;p[0][2]=null;p[3][5]='bB';p=mv(p,7,6,5,5);p=mv(p,1,4,2,4);return p;},
    hl:{},arrows:[],
    nota:'<span class="w">5.Nf3</span> <span class="b">e6</span> — 標準陣形',title:'局面總覽',badge:'badge-blue',bt:'戰略',
    body:`卡羅康的標準形勢（5.Nf3 e6）。<br><br>白棋走 <strong>5.Nf3</strong> 繼續發展馬，黑棋接著走 <strong>5...e6</strong>（<strong>e 兵推至 e6</strong>），鞏固中央的 d5，同時開通 f8 主教的斜線，為 Be7 和易位做準備。<br><br><strong>黑棋的優勢：</strong>兵形健全無弱點，c8 主教自由出動，殘局優良。<br><br><strong>黑棋的計畫：</strong>Nd7 + Be7 + 0-0，然後用后翼的 c5 或 b5 反攻。<br><br><strong>核心記憶：</strong>卡羅康 = 穩固兵形 + 自由主教。法式 = 同樣穩固但主教被封。`},
@@ -1241,7 +1241,7 @@ const STEPS_LD = [
    hl:{'3,4':'hl-y','5,3':'hl-b','4,5':'hl-b'},arrows:[[3,4,1,5,'#3da65acc'],[3,4,1,3,'#c0392bcc'],[5,3,3,5,'#3da65aaa']],
    nota:'<span class="w">0-0</span> <span class="cur">Ne5</span> → Qh5',title:'Ne5 → Qh5 — 主要攻擊套路！',badge:'badge-red',bt:'攻擊',
    labels:[null,null,null,null,null,null,null,null,'Ne5攻擊'],
-   body:`易位後，騎士從 f3 跳到 <strong>e5</strong>（黃色）！<br><br><strong>標準攻擊流程：</strong><br>① Ne5（騎士跳 e5，要充分保護）<br>② 對手通常吃掉騎士（...Nxe5）<br>③ 你用兵重吃（dxe5 或 fxe5）<br>④ 對手騎士被攻，必須退走<br>⑤ 立刻 <strong>Qh5！</strong> 后壓王翼<br><br>Qh5 後威脅 h7 將軍。對手若推 g6 擋，你的后在 h4 繼續施壓，接著推 h4-h5 展開全面王翼攻勢。`},
+   body:`易位後，騎士從 f3 跳到 <strong>e5</strong>（黃色）！<br><br><strong>標準攻擊流程：</strong><br>① Ne5（騎士跳 e5，要充分保護）<br>② 對手通常吃掉騎士（...Nxe5）<br>③ 你用兵重吃（dxe5）<br>④ 對手騎士被攻，必須退走<br>⑤ 立刻 <strong>Qh5！</strong> 后壓王翼<br><br>Qh5 後威脅 h7 將軍。對手若推 g6 擋，你的后在 h4 繼續施壓，接著推 h4-h5 展開全面王翼攻勢。`},
 ];
 
 /* ══════════════════════════════════════
@@ -1518,13 +1518,13 @@ const BRANCH_POS = {
   'ck-nd7': {
     get pos(){
       let p=ckBase();
-      p[3][5]='bB'; // Bf5: f5=row3,col5
+      // 4...Nd7 (Karpov Variation): Nb8→d7; bishop stays on c8
       p[0][1]=null; p[1][3]='bN'; // Nd7: b8(row0,col1)→d7(row1,col3)
       return p;
     },
-    hl:{'4,4':'hl-y','3,5':'hl-g','1,3':'hl-b'},
-    arrows:[[3,5,4,4,'#4a9fd4cc'],[1,3,2,4,'#27ae60aa'],[1,3,3,2,'#27ae60aa']],
-    nota:'<span class="w">4.Nxe4</span> <span class="cur">Bf5</span> <span class="b">Nd7</span> — 古典主線'
+    hl:{'4,4':'hl-y','1,3':'hl-g'},
+    arrows:[[1,3,3,2,'#27ae60cc'],[1,3,2,5,'#27ae60aa']],
+    nota:'<span class="w">4.Nxe4</span> <span class="cur">Nd7</span> — 卡爾波夫變例'
   },
   // Modern: 4...Nf6 (Nf6 challenges the knight)
   'ck-nf6': {
