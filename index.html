@@ -1127,7 +1127,7 @@ const STEPS_NJ = [
 /* ── CARO-KANN ── */
 const STEPS_CK = [
   {pos:iP(),hl:{},arrows:[],nota:'— 初始局面 —',title:'初始局面',badge:null,
-   labels:['初始','1.e4','1...c6','2.d4','2...d5','3.Nc3 dxe4','4.Nxe4','4...Bf5⭐','總覽'],
+   labels:['初始','1.e4','1...c6','2.d4','2...d5','3.Nc3 dxe4','4.Nxe4','4...Bf5⭐','5.Nf3 e6','完整陣型'],
    body:`這是棋局開始前的標準排列。卡羅康防禦是<strong>黑棋對抗 1.e4 最穩健的選擇之一</strong>，用 c6 支撐 d5，避免法式的主教問題。`},
   {get pos(){return mv(iP(),6,4,4,4);},hl:{'4,4':'hl-y'},arrows:[[4,4,3,3,'#4a9fd4cc'],[4,4,3,5,'#4a9fd4cc']],
    nota:'<span class="cur">1. e4</span>',title:'1. e4 — 白棋先走',badge:'badge-gold',bt:'白棋',
@@ -1156,9 +1156,15 @@ const STEPS_CK = [
    nota:'<span class="w">4.Nxe4</span> <span class="b">Bf5 ⭐</span>',title:'4...Bf5 — 卡羅康的靈魂之步！',badge:'badge-blue',bt:'卡羅康核心',
    body:`黑棋立即走 <strong>4...Bf5</strong>（綠色）！c8 主教發展到積極位置，攻擊白棋的 e4 馬。<br><br>同時為 e6 + Nd7 + Ngf6 的完整發展鋪路。<br><br><em>卡羅康 vs 法式的最大差異：這個主教不會被封死！</em>`},
   {get pos(){let p=iP();p=mv(p,6,4,4,4);p=mv(p,1,2,2,2);p=mv(p,6,3,4,3);p=mv(p,1,3,3,3);p=mv(p,7,1,5,2);p[4][4]=null;p[3][3]=null;p[4][4]='wN';p[5][2]=null;p[0][2]=null;p[3][5]='bB';p=mv(p,7,6,5,5);p=mv(p,1,4,2,4);return p;},
-   hl:{},arrows:[],
-   nota:'<span class="w">5.Nf3</span> <span class="b">e6</span> — 標準陣形',title:'局面總覽',badge:'badge-blue',bt:'戰略',
-   body:`卡羅康的標準形勢（5.Nf3 e6）。<br><br>白棋走 <strong>5.Nf3</strong> 繼續發展馬，黑棋接著走 <strong>5...e6</strong>（<strong>e 兵推至 e6</strong>），鞏固中央的 d5，同時開通 f8 主教的斜線，為 Be7 和易位做準備。<br><br><strong>黑棋的優勢：</strong>兵形健全無弱點，c8 主教自由出動，殘局優良。<br><br><strong>黑棋的計畫：</strong>Nd7 + Be7 + 0-0，然後用后翼的 c5 或 b5 反攻。<br><br><strong>核心記憶：</strong>卡羅康 = 穩固兵形 + 自由主教。法式 = 同樣穩固但主教被封。`},
+   hl:{'5,5':'hl-y','2,4':'hl-g'},
+   arrows:[[0,1,1,3,'#4a9fd488'],[0,6,2,5,'#4a9fd488'],[0,5,1,4,'#4a9fd488']],
+   nota:'<span class="w">5.Nf3</span> <span class="b">e6</span>',title:'5.Nf3 e6 — 黑棋的發展計畫',badge:'badge-blue',bt:'計畫',
+   body:`白棋走 <strong>5.Nf3</strong>（黃色），黑棋走 <strong>5...e6</strong>（綠色），騰出 e7 格位供主教入駐。<br><br>⚠️ <strong>此時 Ng8 仍在 g8，f8、g8 都未清空——不能易位！</strong><br><br>黑棋必須依序再走三步才能入王（藍色箭頭為計畫方向）：<br><br><strong>① Nd7</strong>（b8 馬→d7）：支撐 e5，保留后翼彈性，避免擋住 c8 主教<br><strong>② Ngf6</strong>（g8 馬→f6）：清空 g8，攻擊白棋 e4 馬，g 列開通<br><strong>③ Be7</strong>（f8 主教→e7）：清空 f8<br><strong>④ 0-0</strong>：入王！<br><br>缺少第②步 Ngf6 就無法易位，這是最常見的初學失誤。`},
+  {get pos(){let p=iP();p=mv(p,6,4,4,4);p=mv(p,1,2,2,2);p=mv(p,6,3,4,3);p=mv(p,1,3,3,3);p=mv(p,7,1,5,2);p[4][4]=null;p[3][3]=null;p[4][4]='wN';p[5][2]=null;p[0][2]=null;p[3][5]='bB';p=mv(p,7,6,5,5);p=mv(p,1,4,2,4);p=mv(p,0,1,1,3);p=mv(p,0,6,2,5);p=mv(p,0,5,1,4);p=mv(p,0,4,0,6);p=mv(p,0,7,0,5);return p;},
+   hl:{'0,6':'hl-g','0,5':'hl-g','1,3':'hl-g','2,5':'hl-g','1,4':'hl-g'},
+   arrows:[],
+   nota:'<span class="b">Nd7 Ngf6 Be7 0-0</span> — 完整陣型',title:'完整陣型 — 卡羅康理想發展',badge:'badge-blue',bt:'完整陣型',
+   body:`黑棋完成 <strong>Nd7 → Ngf6 → Be7 → 0-0</strong> 四步後的理想陣型（綠色為本回合到位的棋子）：<br><br><span style="color:#6abfd4">■</span> <strong>Nd7</strong>（d7）：守護 e5，維持后翼彈性<br><span style="color:#6abfd4">■</span> <strong>Ngf6</strong>（f6）：王翼馬出動，c 列再發展，攻擊 e4<br><span style="color:#6abfd4">■</span> <strong>Be7</strong>（e7）：主教就位，f8 清空<br><span style="color:#6abfd4">■</span> <strong>0-0</strong>：王翼入王，國王安全！<br><br><strong>黑棋優勢：</strong>兵形健全無弱點，雙馬全數出動，Bf5 主教活躍，入王安全。<br><br><strong>後續計畫：</strong>用 c5 或 b5 在后翼反攻施壓，這是 Karpov 最愛的穩健路線。<br><br><strong>核心記憶：</strong>卡羅康易位前必須先走 <em>Ngf6</em>，缺一不可！`},
 ];
 
 /* ── QUEEN'S GAMBIT ── */
