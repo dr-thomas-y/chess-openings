@@ -6,28 +6,41 @@ on:
       - 'claude/**'
 
 jobs:
-  create-pr:
+  create-and-merge-pr:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-      contents: read
+      contents: write
     steps:
-      - name: Create PR if no open PR exists
+      - name: Create and merge PR
         run: |
+          # Check for open PR
           OPEN=$(gh api \
             "repos/${{ github.repository }}/pulls?head=${{ github.repository_owner }}:${{ github.ref_name }}&base=main&state=open" \
             --jq length)
           echo "Open PRs: $OPEN"
+
           if [ "$OPEN" = "0" ]; then
-            gh api repos/${{ github.repository }}/pulls \
+            echo "Creating PR..."
+            PR=$(gh api repos/${{ github.repository }}/pulls \
               -X POST \
               -f title="Auto: ${{ github.ref_name }}" \
               -f body="Auto-created PR" \
               -f head="${{ github.ref_name }}" \
-              -f base="main"
-            echo "PR created"
+              -f base="main" \
+              --jq .number)
+            echo "Created PR #$PR"
           else
-            echo "Open PR already exists, skipping"
+            PR=$(gh api \
+              "repos/${{ github.repository }}/pulls?head=${{ github.repository_owner }}:${{ github.ref_name }}&base=main&state=open" \
+              --jq '.[0].number')
+            echo "Using existing PR #$PR"
           fi
+
+          echo "Merging PR #$PR..."
+          gh api repos/${{ github.repository }}/pulls/$PR/merge \
+            -X PUT \
+            -f merge_method=merge
+          echo "Done!"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
