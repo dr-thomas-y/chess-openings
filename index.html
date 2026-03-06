@@ -1253,14 +1253,14 @@ const STEPS_LD = [
    labels:[null,null,null,null,null,null,'6.c3'],
    body:`白棋走 <strong>6.c3</strong>，c 列兵推到 c3，<strong>兵的三角形完成：c3 - d4 - e3</strong>！<br><br>這個鐵三角的作用：<br>• 幾乎沒有弱點<br>• 穩固支撐 d4<br>• 阻止對手騎士跳進 d4 或 b4<br>• 讓你的陣地固若金湯`},
   {get pos(){let p=iP();p=mv(p,6,3,4,3);p=mv(p,7,2,4,5);p=mv(p,6,4,5,4);p=mv(p,7,6,5,5);p=mv(p,7,1,6,3);p=mv(p,6,2,5,2);return mv(p,7,5,5,3);},
-   hl:{'5,3':'hl-y','4,5':'hl-b','5,5':'hl-b','6,3':'hl-b','5,2':'hl-b','5,4':'hl-b','4,3':'hl-b'},arrows:[[5,3,1,7,'#3da65acc'],[4,5,3,4,'#3da65aaa']],
+   hl:{'5,3':'hl-y','4,5':'hl-b','6,3':'hl-b','5,2':'hl-b','5,4':'hl-b','4,3':'hl-b'},arrows:[[5,3,1,7,'#3da65acc'],[4,5,3,4,'#3da65aaa']],
    nota:'<span class="w">c3</span> <span class="cur">7. Bd3</span> ✓',title:'7. Bd3 ✓ — 理想陣型完成！',badge:'badge-green',bt:'陣型完成',
    labels:[null,null,null,null,null,null,null,'7.Bd3✓'],
    body:`白棋走 <strong>7.Bd3</strong>，f1 主教到 d3，<strong>主教對準 h7！</strong>（綠色箭頭）<br><br>🏆 <strong>理想陣型完成</strong>：<br>• 兵陣：c3-d4-e3（鐵三角）<br>• Bf4：控制 e5<br>• Bd3：瞄準 h7（王翼攻擊矛頭）<br>• Nf3 + Nbd2：騎士就緒<br><br><strong>下一步：0-0 易位，然後執行 Ne5 攻擊！</strong>`},
   {get pos(){let p=iP();p=mv(p,6,3,4,3);p=mv(p,7,2,4,5);p=mv(p,6,4,5,4);p=mv(p,7,6,5,5);p=mv(p,7,1,6,3);p=mv(p,6,2,5,2);p=mv(p,7,5,5,3);
    p[7][6]='wK';p[7][4]=null;p[7][5]='wR';p[7][7]=null; // 0-0: king e1→g1, rook h1→f1
    p=mv(p,5,5,3,4);return p;},
-   hl:{'3,4':'hl-y','7,6':'hl-b','7,5':'hl-b','5,3':'hl-b','4,5':'hl-b'},arrows:[[3,4,1,5,'#3da65acc'],[3,4,1,3,'#c0392bcc'],[5,3,1,7,'#3da65aaa']],
+   hl:{'3,4':'hl-y','7,6':'hl-b','4,5':'hl-b'},arrows:[[3,4,1,5,'#3da65acc'],[3,4,1,3,'#c0392bcc'],[5,3,1,7,'#3da65aaa']],
    nota:'<span class="w">0-0</span> <span class="cur">Ne5</span> → Qh5',title:'Ne5 → Qh5 — 主要攻擊套路！',badge:'badge-red',bt:'攻擊',
    labels:[null,null,null,null,null,null,null,null,'Ne5攻擊'],
    body:`易位後，騎士從 f3 跳到 <strong>e5</strong>（黃色）！<br><br><strong>標準攻擊流程：</strong><br>① Ne5（騎士跳 e5，要充分保護）<br>② 對手通常吃掉騎士（...Nxe5）<br>③ 你用兵重吃（dxe5）<br>④ 對手騎士被攻，必須退走<br>⑤ 立刻 <strong>Qh5！</strong> 后壓王翼<br><br>Qh5 後威脅 h7 將軍。對手若推 g6 擋，你的后在 h4 繼續施壓，接著推 h4-h5 展開全面王翼攻勢。`},
